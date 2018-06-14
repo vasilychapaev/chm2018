@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Чемпионат мира по футболу 2018</title>
+
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Навигация</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/"><img src="/images/logo.png" alt=""></a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+
+            <form class="navbar-form navbar-center" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Поиск">
+                </div>
+            </form>
+
+            <ul class="nav navbar-nav pull-right">
+                <!--<li class="active"><a href="/setka/">Поиск</a></li>-->
+                <li><a href="/setka/">Турнирная сетка</a></li>
+                <li><a href="/raspisanie/">Расписание матчей</a></li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+
+<div class="section section-buttons">
+    <div class="container">
+        <button><a href="#">Архив матчей</a></button>
+        <button><a href="#">Прямая трансляция</a></button>
+        <button><a href="#">Будущие матчи</a></button>
+    </div>
+</div>
+
+
+<div class="section section-login">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-8 col-md-offset-2">
+
+
+                <p>ВСЕ трансляции матчей Чемпионата Мира по Футболу, СО ВСЕХ ДОСТУПНЫХ КАНАЛОВ из необъятной России на PersikTV!</p>
+                <p>Ничего лишнего - только Футбол.</p>
+
+                <div>
+                    <form action="">
+                        <input type="text" name="email" class="form-control">
+                        <button type="submit" class="btn btn-default">Бесплатный доступ</button>
+                    </form>
+                </div>
+
+                <p>Для АБСОЛЮТНО БЕСПЛАТНОГО просмотра ВСЕХ трансляций матчей - оставьте свой эмейл, мы вшлем Вам ДОСТУП к ресурсу.</p>
+                <p>ЕСЛИ ВЫ УЖЕ ЗАРЕГИСТРИРОВАНЫ В СИСТЕМЕ или ЯВЛЯЕТЕСЬ ПОЛЬЗОВАТЕЛЕМ СЕРВИСА PERSIK - то ДЛЯ ВХОДА введите СВОЙ ЛОГИН (Email) - и наслаждайтесь просмотром!</p>
+
+
+            </div>
+
+            <div class="col-md-8 col-md-offset-2">
+                <p>Оле! Оле! Оле! Оле!</p>
+                <p>Будем смотреть Футбол вместе!</p>
+                <p>Осталось только подтвердить регистрацию.</p>
+                <p>Пройдите в почту, нажмите кнопку “ПОДТВЕРДИТЬ” - и смотрите все трансляции матчей Чемпионата Мира по Футболу абсолютно бесплатно на fwc2018.persik.tv</p>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-md-offset-1">
+                <img src="/images/logo_persik.png" alt="">
+            </div>
+            <div class="col-md-3">
+                <ul>
+                    <li>+375 17 336-11-11</li>
+                    <li>+375 29 336-11-00</li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <ul>
+                    <li>info@persik.by</li>
+                    <li>www.persik.by</li>
+                </ul>
+            </div>
+            <div class="col-md-2">
+                <img src="/images/volk.png" alt="">
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/clappr.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        var player = new Clappr.Player({
+            parentId: "#player",
+//            source: "/video/futbik11.mp4",
+            source: "https://bamper.by/upload/futbik11.mp4",
+//            height: window.PLAYER_HEIGHT,
+//            width: window.PLAYER_WIDTH,
+            autoPlay: true
+        });
+        Clappr.Log.setLevel(0);
+    });
+</script>
+
+</body>
+</html>
+
+
