@@ -1,0 +1,19 @@
+/* fonts */
+@import url("https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700&subset=cyrillic");
+/* backgroud colors */
+.navbar-brand img {
+  height: 100%; }
+
+.navbar-center {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  margin: auto; }
+
+.section-thumbs img {
+  width: 100%; }
+
+.section-setka img {
+  width: 32px; }
+
+/*# sourceMappingURL=styles.css.map */
