@@ -1,0 +1,19 @@
+body {
+  font-family: $base-font-family;
+  font-size: $base-font-size;
+  line-height:1.7em;
+  color: $base-font-color;
+}
+
+input, textarea, button, .form-control {
+  @include border-radius(0);
+}
+
+
+a {
+  color: $link-color-primary;
+
+  :hover, :focus {
+    color: $link-color-primary;
+  }
+}

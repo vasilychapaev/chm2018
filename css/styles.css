@@ -1,19 +1,153 @@
 /* fonts */
 @import url("https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700&subset=cyrillic");
 /* backgroud colors */
-.navbar-brand img {
-  height: 100%; }
+/* Mixins */
+h1, h2, h3, h4, h5 {
+  margin-top: 0; }
 
-.navbar-center {
-  position: absolute;
-  width: 100%;
-  text-align: center;
-  margin: auto; }
+.h-green-square, .green-square {
+  width: 10px;
+  height: 10px;
+  background: #6bc200;
+  display: inline-block;
+  margin-left: 15px; }
+
+h2 {
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 50px; }
+
+body {
+  font-family: "Roboto Condensed", sans-serif;
+  font-size: 15px;
+  line-height: 1.7em;
+  color: #212121; }
+
+input, textarea, button, .form-control {
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0; }
+
+a {
+  color: #212121; }
+  a :hover, a :focus {
+    color: #212121; }
+
+.navbar {
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  height: 100px;
+  padding-top: 10px; }
+
+.navbar-brand img {
+  height: 40px; }
+
+.navbar-form {
+  display: block;
+  text-align: center; }
+  .navbar-form .wrapper div {
+    display: inline-block;
+    margin-top: 10px;
+    background: url(/images/search-bg.png) no-repeat top center;
+    background-size: 250px;
+    width: 250px;
+    height: 40px; }
+    .navbar-form .wrapper div input {
+      border: 0;
+      width: 196px;
+      height: 30px;
+      margin-top: 5px; }
+    .navbar-form .wrapper div button {
+      background: none;
+      border: 0; }
+      .navbar-form .wrapper div button img {
+        width: 26px;
+        margin-top: 5px;
+        margin-left: -2px; }
+
+.navbar-inverse .navbar-nav ul {
+  margin-right: 100px; }
+
+.navbar-inverse .navbar-nav > li {
+  width: 100px;
+  margin-right: 50px;
+  text-align: center; }
+  .navbar-inverse .navbar-nav > li > a {
+    color: #ffffff;
+    text-transform: uppercase; }
+
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > li > a:hover {
+  background-color: transparent;
+  color: #ff9907; }
+
+.section {
+  margin-top: 50px; }
+  .section hr {
+    margin: 50px 0 0; }
+
+.section-buttons {
+  text-align: center; }
+  .section-buttons a {
+    display: inline-block;
+    background: url(/images/button-bg-green.png) no-repeat;
+    background-size: 170px;
+    width: 170px;
+    height: 50px;
+    margin: 10px;
+    padding-top: 12px;
+    font-weight: bold;
+    text-transform: uppercase; }
 
 .section-thumbs img {
   width: 100%; }
+.section-thumbs span {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  text-align: center; }
+.section-thumbs .button-more {
+  text-align: center; }
+  .section-thumbs .button-more a {
+    display: inline-block;
+    background: url(/images/button-bg-orange.png) no-repeat;
+    background-size: 170px;
+    width: 170px;
+    height: 30px;
+    margin: 10px;
+    padding: 3px;
+    color: #ffffff;
+    font-weight: bold;
+    text-transform: uppercase; }
 
 .section-setka img {
   width: 32px; }
+
+/* Footer */
+footer {
+  margin-top: 50px;
+  height: 200px;
+  background: url(/images/footer-bg3.png) repeat-x top left;
+  background-size: auto 200px;
+  padding-top: 75px; }
+  footer .logo-persik img {
+    width: 100%; }
+  footer .contacts {
+    display: table-cell;
+    vertical-align: middle;
+    color: #ffffff; }
+    footer .contacts ul {
+      list-style: none; }
+      footer .contacts ul li {
+        height: 40px; }
+    footer .contacts img {
+      display: inline-block;
+      width: 32px;
+      margin-right: 10px; }
+  footer .logo-volk img {
+    width: 100%;
+    margin-top: -130px; }
 
 /*# sourceMappingURL=styles.css.map */

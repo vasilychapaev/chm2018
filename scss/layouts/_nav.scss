@@ -1,0 +1,62 @@
+.navbar {
+  @include border-radius(0);
+  height: 100px;
+  padding-top:10px;
+}
+
+.navbar-brand img {
+  height: 40px;
+}
+
+.navbar-form {
+  display: block;
+  text-align: center;
+
+  .wrapper div {
+    display: inline-block;
+    margin-top: 10px;
+    background: url(/images/search-bg.png) no-repeat top center;
+    background-size: 250px;
+    width: 250px;
+    height: 40px;
+
+    input {
+      border: 0;
+      width: 196px;
+      height: 30px;
+      margin-top: 5px;
+    }
+    button {
+      background:none;
+      border: 0;
+
+      img {
+        width: 26px;
+        margin-top: 5px;
+        margin-left: -2px;
+      }
+
+    }
+  }
+}
+
+.navbar-inverse .navbar-nav ul {
+  margin-right: 100px;
+}
+
+.navbar-inverse .navbar-nav > li {
+  width: 100px;
+  margin-right: 50px;
+  text-align: center;
+
+  > a {
+    color: #ffffff;
+    text-transform: uppercase;
+
+  }
+}
+
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > li > a:hover {
+  background-color: transparent;
+  color: $primary-color;
+}
