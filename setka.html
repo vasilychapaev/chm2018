@@ -16,28 +16,32 @@
 
 <nav class="navbar navbar-inverse">
     <div class="container">
+
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Навигация</span>
+                <span class="sr-only">Меню сайта</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="/"><img src="/images/logo.png" alt=""></a>
         </div>
-        <div id="navbar" class="collapse navbar-collapse">
 
-            <form class="navbar-form navbar-center" role="search">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Поиск">
-                </div>
-            </form>
+        <div class="collapse navbar-collapse">
 
             <ul class="nav navbar-nav pull-right">
-                <!--<li class="active"><a href="/setka/">Поиск</a></li>-->
-                <li><a href="/setka/">Турнирная сетка</a></li>
-                <li><a href="/raspisanie/">Расписание матчей</a></li>
+                <li class="active"><a href="/setka.html">Турнирная сетка</a></li>
+                <li><a href="/raspisanie.html">Расписание матчей</a></li>
             </ul>
+
+            <form class="navbar-form" role="search">
+                <div class="wrapper">
+                    <div>
+                        <button><img src="/images/search-icon.png" alt=""></button>
+                        <input type="text" class="form-control" placeholder="Поиск">
+                    </div>
+                </div>
+            </form>
 
         </div>
     </div>
@@ -46,11 +50,12 @@
 
 <div class="section section-buttons">
     <div class="container">
-        <button><a href="#">Архив матчей</a></button>
-        <button><a href="#">Прямая трансляция</a></button>
-        <button><a href="#">Будущие матчи</a></button>
+        <a href="#">Архив матчей</a>
+        <a href="#">Прямая трансляция</a>
+        <a href="#">Будущие матчи</a>
     </div>
 </div>
+
 
 
 <div class="section section-setka">
@@ -374,22 +379,22 @@
 <footer>
     <div class="container">
         <div class="row">
-            <div class="col-md-2 col-md-offset-1">
+            <div class="col-md-2 col-md-offset-1 logo-persik">
                 <img src="/images/logo_persik.png" alt="">
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 contacts">
                 <ul>
-                    <li>+375 17 336-11-11</li>
-                    <li>+375 29 336-11-00</li>
+                    <li><img src="/images/icon-phone.png" alt=""> +375 17 336-11-11</li>
+                    <li><img src="/images/icon-phone-mobile.png" alt=""> +375 29 336-11-00</li>
                 </ul>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 contacts">
                 <ul>
-                    <li>info@persik.by</li>
-                    <li>www.persik.by</li>
+                    <li><img src="/images/icon-letter.png" alt=""> info@persik.by</li>
+                    <li><img src="/images/icon-globe.png" alt=""> www.persik.by</li>
                 </ul>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 logo-volk">
                 <img src="/images/volk.png" alt="">
             </div>
         </div>
