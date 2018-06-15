@@ -10,21 +10,18 @@ footer {
   padding-top: 75px;
 
   .logo-persik {
+    text-align: right;
     img {
-      width: 100%;
+      width: 150px;
     }
   }
 
   .contacts {
-    display: table-cell;
+    line-height: 72px;
     vertical-align: middle;
+    text-align: center;
     color: $link-color-secondary;
-    ul {
-      list-style: none;
-      li {
-        height: 40px;
-      }
-    }
+
     img {
       display: inline-block;
       width: 32px;
