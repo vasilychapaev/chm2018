@@ -33,6 +33,10 @@ h2 {
   font-size: 15px;
   font-weight: bold; }
 
+.btn-primary {
+  background: #ff9907;
+  border: 0; }
+
 .navbar {
   -moz-border-radius: 0;
   -webkit-border-radius: 0;

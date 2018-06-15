@@ -35,3 +35,9 @@ h2 {
   font-size: 15px;
   font-weight: bold;
 }
+
+
+.btn-primary {
+  @include add-background($primary-color);
+  border: 0;
+}
