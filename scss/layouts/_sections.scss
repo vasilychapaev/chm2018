@@ -52,8 +52,168 @@
     }
   }
 
+  .h-green-square {
+    margin-left: 15px;
+  }
+
+  h2 {
+    margin-bottom: 50px;
+  }
 }
 
 .section-setka img {
   width: 32px
+}
+
+
+
+
+.section-match {
+  .gazon {
+    background: url(/images/grass-big-bg_low.jpg) repeat-x bottom left;
+    background-size: 100%;
+    min-height: 200px;
+
+    padding: 50px 0;
+
+    text-align: center !important;
+    color: $link-color-secondary;
+
+    h1 img {
+      width: 50px;
+      height: 50px;
+      @include border-radius(50%);
+    }
+
+    .when, .stage, .where {
+      font-size: 20px;
+    }
+
+    .player-wrapper {
+      margin: 50px auto;
+      text-align: center;
+
+      #player {
+        width: 600px;
+        margin: 0 auto;
+      }
+    }
+  }
+
+
+  .history, .sostav {
+    margin-top: 50px;
+    margin-bottom: 20px;
+
+  }
+
+  .sostav {
+    img {
+      width: 100px;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 20px;
+
+      li:first-child {
+        font-weight: bold;
+      }
+    }
+    .sostav-left {
+      text-align: right;
+    }
+
+  }
+
+  .facts {
+    .facts-left {
+      text-align: right;
+    }
+  }
+
+
+}
+
+
+.section-login {
+  text-align: center;
+
+  img.cup {
+    width: 150px;
+  }
+
+  h2 {
+    margin: 30px auto 30px;
+    font-size: 18px;
+  }
+
+  h1 {
+    text-transform: uppercase;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+
+  .form-email {
+    div.email-bg{
+      display: inline-block;
+      margin-top: 10px;
+      background: url(/images/orange-bg.png) no-repeat top center;
+      background-size: 250px;
+      width: 250px;
+      height: 40px;
+      text-align: left;
+
+      .email-txt {
+        color: $link-color-secondary;
+        font-size: 18px;
+        font-weight: bold;
+        padding: 0 7px 0 10px;
+      }
+
+      input {
+        display: inline-block;
+        border: 0;
+        width: 178px;
+        height: 30px;
+        margin-top: 5px;
+      }
+
+    }
+
+    div.button {
+      margin-top: 10px;
+
+      button {
+        width: 250px;
+        height: 40px;
+        background: url(/images/orange-bg.png) no-repeat top left;
+        background-size: 250px;
+        @include border-radius(0);
+        border: 0;
+
+        font-size: 18px;
+        font-weight: bold;
+        color: $link-color-secondary;
+        text-transform: uppercase;
+
+      }
+    }
+
+  }
+
+
+  .notes {
+    text-align: left;
+    margin-top: 20px;
+
+    img {
+      width: 10px;
+    }
+  }
+
+
+
 }

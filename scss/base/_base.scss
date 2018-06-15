@@ -17,3 +17,21 @@ a {
     color: $link-color-primary;
   }
 }
+
+
+
+.h-green-square, .green-square {
+  width: 10px;
+  height: 10px;
+  background: $secondary-color;
+  display: inline-block;
+}
+
+
+
+h2 {
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 15px;
+  font-weight: bold;
+}

@@ -5,20 +5,6 @@
 h1, h2, h3, h4, h5 {
   margin-top: 0; }
 
-.h-green-square, .green-square {
-  width: 10px;
-  height: 10px;
-  background: #6bc200;
-  display: inline-block;
-  margin-left: 15px; }
-
-h2 {
-  display: inline-block;
-  text-transform: uppercase;
-  font-size: 15px;
-  font-weight: bold;
-  margin-bottom: 50px; }
-
 body {
   font-family: "Roboto Condensed", sans-serif;
   font-size: 15px;
@@ -34,6 +20,18 @@ a {
   color: #212121; }
   a :hover, a :focus {
     color: #212121; }
+
+.h-green-square, .green-square {
+  width: 10px;
+  height: 10px;
+  background: #6bc200;
+  display: inline-block; }
+
+h2 {
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 15px;
+  font-weight: bold; }
 
 .navbar {
   -moz-border-radius: 0;
@@ -55,11 +53,6 @@ a {
     background-size: 250px;
     width: 250px;
     height: 40px; }
-    .navbar-form .wrapper div input {
-      border: 0;
-      width: 196px;
-      height: 30px;
-      margin-top: 5px; }
     .navbar-form .wrapper div button {
       background: none;
       border: 0; }
@@ -67,6 +60,11 @@ a {
         width: 26px;
         margin-top: 5px;
         margin-left: -2px; }
+    .navbar-form .wrapper div input {
+      border: 0;
+      width: 196px;
+      height: 30px;
+      margin-top: 5px; }
 
 .navbar-inverse .navbar-nav ul {
   margin-right: 100px; }
@@ -121,15 +119,108 @@ a {
     color: #ffffff;
     font-weight: bold;
     text-transform: uppercase; }
+.section-thumbs .h-green-square {
+  margin-left: 15px; }
+.section-thumbs h2 {
+  margin-bottom: 50px; }
 
 .section-setka img {
   width: 32px; }
+
+.section-match .gazon {
+  background: url(/images/grass-big-bg_low.jpg) repeat-x bottom left;
+  background-size: 100%;
+  min-height: 200px;
+  padding: 50px 0;
+  text-align: center !important;
+  color: #ffffff; }
+  .section-match .gazon h1 img {
+    width: 50px;
+    height: 50px;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%; }
+  .section-match .gazon .when, .section-match .gazon .stage, .section-match .gazon .where {
+    font-size: 20px; }
+  .section-match .gazon .player-wrapper {
+    margin: 50px auto;
+    text-align: center; }
+    .section-match .gazon .player-wrapper #player {
+      width: 600px;
+      margin: 0 auto; }
+.section-match .history, .section-match .sostav {
+  margin-top: 50px;
+  margin-bottom: 20px; }
+.section-match .sostav img {
+  width: 100px; }
+.section-match .sostav ul {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 20px; }
+  .section-match .sostav ul li:first-child {
+    font-weight: bold; }
+.section-match .sostav .sostav-left {
+  text-align: right; }
+.section-match .facts .facts-left {
+  text-align: right; }
+
+.section-login {
+  text-align: center; }
+  .section-login img.cup {
+    width: 150px; }
+  .section-login h2 {
+    margin: 30px auto 30px;
+    font-size: 18px; }
+  .section-login h1 {
+    text-transform: uppercase;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 30px; }
+  .section-login .form-email div.email-bg {
+    display: inline-block;
+    margin-top: 10px;
+    background: url(/images/orange-bg.png) no-repeat top center;
+    background-size: 250px;
+    width: 250px;
+    height: 40px;
+    text-align: left; }
+    .section-login .form-email div.email-bg .email-txt {
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: bold;
+      padding: 0 7px 0 10px; }
+    .section-login .form-email div.email-bg input {
+      display: inline-block;
+      border: 0;
+      width: 178px;
+      height: 30px;
+      margin-top: 5px; }
+  .section-login .form-email div.button {
+    margin-top: 10px; }
+    .section-login .form-email div.button button {
+      width: 250px;
+      height: 40px;
+      background: url(/images/orange-bg.png) no-repeat top left;
+      background-size: 250px;
+      -moz-border-radius: 0;
+      -webkit-border-radius: 0;
+      border-radius: 0;
+      border: 0;
+      font-size: 18px;
+      font-weight: bold;
+      color: #ffffff;
+      text-transform: uppercase; }
+  .section-login .notes {
+    text-align: left;
+    margin-top: 20px; }
+    .section-login .notes img {
+      width: 10px; }
 
 /* Footer */
 footer {
   margin-top: 50px;
   height: 200px;
-  background: url(/images/footer-bg3.png) repeat-x top left;
+  background: url(/images/grass-bg3_.jpg) repeat-x top left;
   background-size: auto 200px;
   padding-top: 75px; }
   footer .logo-persik img {
