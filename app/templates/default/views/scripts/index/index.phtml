@@ -1,0 +1,70 @@
+<div class="section section-thumbs">
+    <div class="container">
+        <div class="row">
+
+            <? foreach ($this->today as $item): ?>
+            <div class="col-md-4">
+                <a href="<?=$item['url']?>"><img src="/images/fifa-bg.jpg" alt=""></a>
+                <span><a href="<?=$item['url']?>"><?=$item['cmd1']['name_ru']?> - <?=$item['cmd2']['name_ru']?>, <?=$item['date_ru']?></a></span>
+            </div>
+            <? endforeach ?>
+
+        </div>
+
+        <hr>
+
+    </div>
+</div>
+
+
+<div class="section section-thumbs">
+    <div class="container">
+        <div class="row">
+            <div class="h-green-square"></div>
+            <h2>Будущие трансляции</h2>
+        </div>
+        <div class="row">
+
+            <? foreach ($this->itemsFuture as $item): ?>
+            <div class="col-md-4">
+                <a href="<?=$item['url']?>"><img src="/images/fifa-bg.jpg" alt=""></a>
+                <span><a href="<?=$item['url']?>"><?=$item['cmd1']['name_ru']?> - <?=$item['cmd2']['name_ru']?>, <?=$item['date_ru']?></a></span>
+            </div>
+            <? endforeach ?>
+
+        </div>
+
+        <div class="row button-more">
+            <a href="/future/">Еще</a>
+        </div>
+
+        <hr>
+
+    </div>
+</div>
+
+
+<div class="section section-thumbs">
+    <div class="container">
+        <div class="row">
+            <div class="h-green-square"></div>
+            <h2>Архив 72 часа</h2>
+        </div>
+
+        <div class="row">
+
+            <? foreach ($this->itemsArchive as $item): ?>
+                <div class="col-md-4">
+                    <a href="<?=$item['url']?>"><img src="/images/fifa-bg.jpg" alt=""></a>
+                    <span><a href="<?=$item['url']?>"><?=$item['cmd1']['name_ru']?> - <?=$item['cmd2']['name_ru']?>, <?=$item['date_ru']?></a></span>
+                </div>
+            <? endforeach ?>
+
+        </div>
+
+        <div class="row button-more">
+            <a href="/archive/">Еще</a>
+        </div>
+
+    </div>
+</div>

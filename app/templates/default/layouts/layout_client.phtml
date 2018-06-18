@@ -1,0 +1,344 @@
+<?php
+if (!isset($_COOKIE['source_host']) && isset($_SERVER['HTTP_REFERER'])) {
+    $host = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
+    if ($host != $_SERVER["HTTP_HOST"]) {
+        setcookie('source_host', $host, strtotime('+360 days'), '/');
+    }
+}
+?>
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="canonical" href="https://<?php echo $_SERVER['HTTP_HOST']; ?><?php echo parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH ); ?>" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title><?php echo $this->title; ?></title>
+        <meta name="description" content="<?php echo $this->description? : 'Persik.by – интернет телевидение нового поколения. Смотреть онлайн тв в хорошем качестве с большим выбором каналов, фильмов, мультфильмов, сериалов. Смотрите отличное интернет телевидение онлайн вместе с Persik.by!' ?>">
+        <meta name="keywords" content="<?php echo $this->keywords ?>">
+        <meta name="robots" content="index, folow">
+        <meta property="og:image" content="http://persik.by/images/persik-banner.jpg">
+        <meta property="og:description" content="Только лучшие тв-каналы! Смотрите онлайн на всех устройствах и любых экранах!">
+        <link href="/images/leaf-icon.ico" rel="shortcut icon">
+        <link href='//fonts.googleapis.com/css?family=Roboto:400,300,200,100' rel='stylesheet' type='text/css'>
+		<link href='//fonts.googleapis.com/css?family=Roboto+Condensed:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+        <?php echo $this->render('include/head.phtml'); ?>
+
+        <?php if ($this->user->getGroup() != "guest"): ?>
+            <?php
+                $this->placeholder('bookmarks')->captureStart();
+                $this->bookmarks = Lms_Application::getBookmarks();
+                echo $this->render('video/include/bookmarks.phtml');
+                $this->placeholder('bookmarks')->captureEnd();
+            ?>
+        <?php endif;?>
+        <?php if ($this->featuredMovies): ?>
+            <?php
+                $this->placeholder('featured')->captureStart();
+                echo $this->render('video/include/featured.phtml');
+                $this->placeholder('featured')->captureEnd();
+            ?>
+        <?php endif;?>
+
+        <script type="text/javascript">
+            //<![CDATA[
+            var TEMPLATE_URL = '<?php
+        $t = end($this->publicTemplates);
+        echo $t['url'];
+        ?>';
+            var ROOT_URL = '<?php echo $this->rootUrl; ?>';
+            var USER_ID = <?php echo $this->user->getId()? : 'null'; ?>;
+            var API_URL = '<?php echo $this->rootUrl; ?>/api.php?format=ajax&device=<?php echo Lms_Application::getDevice();?>&lang=<?php echo $this->lang ?>';
+            var DEVICE = '<?php echo Lms_Application::getDevice();?>';
+            var TEMPLATES = {};
+            var SETTINGS = {};
+            var DEFAULT_FAVICON = '/images/leaf-icon.ico';
+            less = {env: 'production'};
+<?php if ($this->freeChannels): ?>
+                var FREE_CHANNELS = <?php echo Zend_Json::encode($this->freeChannels) ?>;
+<?php endif; ?>
+            var SOUNDS = {};
+            SOUNDS.NOTICE = '<?php echo $this->findPath('sound/notice.mp3'); ?>';
+            var DRM_FREE = <?php echo Lms_Application::isDrmFree() ? 'true' : 'false' ?>;
+            var REGIONS = <?php echo Zend_Json::encode(Lms_Application::getRegionIds()) ?>;
+            //]]>
+        </script>
+<?php $this->headScript()->captureStart(); ?>
+        //@non-cache
+        $j(document).ready(function() {
+        <?php echo $this->placeholder('onready'); ?>
+        });
+        <?php if ($this->controller=='user'):?>
+            window.ui.checkAuthorization('Необходимо авторизоваться на сайте');
+        <?php endif;?>
+        <?php $this->headScript()->captureEnd(); ?>
+
+        <?php $i = -100; ?>
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/prototype-1.7.1.js')); ?>
+        <?php //$this->headScript()->offsetSetFile($i++, $this->findPath('js/jquery-2.0.2.min.js'));?>
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/jquery-1.10.2.min.js')); ?>
+        <?php $this->headScriptOffsetCapture()->captureStart($i++); ?>
+        var $j = jQuery.noConflict();
+        <?php $this->headScriptOffsetCapture()->captureEnd(); ?>
+
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/idangerous.swiper/idangerous.swiper-2.4.1.min.js')); ?>
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/form.js')); ?>
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/modernizr.custom.96753.js')); ?>
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/jquery-plugins/text-shadow.js')); ?>
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/jquery-plugins/jquery.mousewheel.js')); ?>
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/jquery-plugins/jquery.jscrollpane.min.js')); ?>
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/jquery-plugins/jquery.cookie.js')); ?>
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/jquery-ui/jquery-ui-1.8.24.custom.min.js')); ?>
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/jquery.main.js')); ?>
+
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/jquery-plugins/jquery.movietooltip.js')); ?>
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/jquery-plugins/jquery.tooltip.js')); ?>
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/jquery-plugins/jquery.timeprogress.js')); ?>
+
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/fancybox/jquery.fancybox.js')); ?>
+
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/trimpath/template.js')); ?>
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/lms-jsf/JSAN.js')); ?>
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/lms-jsf/LMS.js')); ?>
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/lms-jsf/LMS/Connector.js')); ?>
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/lms-jsf/LMS/Signalable.js')); ?>
+<?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/lms-jsf/LMS/i18n.js')); ?>
+
+
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/sha1.js')); ?>
+
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/json2.js')); ?>
+
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/LMS/Ajax.js')); ?>
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/LMS/Action.js')); ?>
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/LMS/UI.js')); ?>
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/LMS/i18n/ru.js')); ?>
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/LMS/i18n/ru/Main.js')); ?>
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/LMS/Text.js')); ?>
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/LMS/Date.js')); ?>
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/LMS/DateFormat.js')); ?>
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/LMS/LiveDatetime.js')); ?>
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/lms-jsf/LMS/Utils.js')); ?>
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/LMS/Video/Action.js')); ?>
+        <?php $this->headScript()->offsetSetFile($i++, $this->findPath('js/LMS/Video/UI.js')); ?>
+<?php $this->headScript()->captureStart(); ?>
+        JSAN.errorLevel = "warn";
+        JSAN.includePath = ['<?php echo $this->findPath('js/lms-jsf'); ?>'];
+        var RESTRICTIONS = <?php echo Zend_Json::encode(Lms_Application::getConfig('restrictions')) ?>;
+
+        var ajax = new LMS.Ajax();
+        ajax.setPhpApiUrl(API_URL);
+        var action = new LMS.Action();
+        action.setQueryMethod(function(path, params, callback, backend){ajax.exec(path, params, callback, backend)});
+
+        var ui = new LMS.UI();
+        LMS.Connector.connect('userError', ui, 'showUserError');
+        LMS.Connector.connect('userMessage', ui, 'showUserMessage');
+        LMS.Connector.connect('highlightElement', ui, 'highlightElement');
+        LMS.Action.addMethods(LMS.Video.Action);
+        LMS.UI.addMethods(LMS.Video.UI);
+
+        $j(document).ready(function() {
+            window.ui.init();
+            if (window.location.hash=='#popup') {
+                $j('#overlay').fadeIn();
+            }
+        });
+
+        var LOGON_URL = "<?php echo $this->url(array('action' => 'logon', 'token' => '_token_', 'email' => '_email_'), 'user', true); ?>";
+        var REGISTER_URL = "<?php echo $this->url(array('action' => 'register', 'token' => '_token_', 'email' => '_email_'), 'user', true); ?>";
+        var CHANNEL_URL = "<?php echo $this->url(array('id' => '_id_'), 'tvchannel', true); ?>";
+        var VOD_URL = "<?php echo $this->url(array('id' => '_id_'), 'vod', true); ?>";
+        var PROGRAMME_URL = "<?php echo $this->url(array('id' => '_id_'), 'programme', true); ?>";
+        var BUY_URL = "<?php echo $this->url(array('action' => 'buy'), 'user', true); ?>";
+
+        TEMPLATES.AFTER_REGISTRATION_MESSAGE = <?php echo Zend_Json::encode($this->t->_('After register text')); ?>;
+        <?php $this->headScript()->captureEnd(); ?>
+
+        <?php $this->jsFileTemplate('MOVIE_TOOLTIP', __DIR__ . '/jhtml/movie-tooltip.jhtml'); ?>
+        <?php $this->jsFileTemplate('RECOMMENDED_CHANNELS', __DIR__ . '/jhtml/recommended-channels.jhtml'); ?>
+        <?php $this->jsFileTemplate('PLAYER_CHANNELS', __DIR__ . '/jhtml/player-channels.jhtml'); ?>
+        <?php $this->jsFileTemplate('BOOKMARKS', __DIR__ . '/jhtml/bookmarks.jhtml'); ?>
+        <?php $this->jsFileTemplate('SEARCH_SUGGESTION', __DIR__ . '/jhtml/search-suggestion.jhtml'); ?>
+        <?php $this->jsFileTemplate('OTHER_MOVIES', __DIR__ . '/jhtml/other-movies.jhtml'); ?>
+        <?php $this->jsFileTemplate('EPISODES', __DIR__ . '/jhtml/episodes.jhtml'); ?>
+        <?php $this->jsFileTemplate('NOTICE', __DIR__ . '/jhtml/notice.jhtml'); ?>
+
+        <?php $this->headLink()->prependStylesheet($this->findPath('css/all.css')); ?>
+        <?php $this->headLink()->prependStylesheet($this->findPath('css/auth.css')); ?>
+        <?php $this->headLink()->appendStylesheet($this->findPath('css/new.css')); ?>
+        <?php $this->headLink()->appendStylesheet($this->findPath('css/bookmarks.css'));?>
+        <?php $this->headLink()->appendStylesheet($this->findPath('css/featured.css'));?>
+        <?php $this->headLink()->appendStylesheet($this->findPath('css/items.css'));?>
+
+        <?php $this->headLink()->prependStylesheet($this->findPath('js/idangerous.swiper/idangerous.swiper.css')); ?>
+        <?php $this->headLink()->prependStylesheet($this->findPath('css/panel.css')); ?>
+        <?php $this->headLink()->prependStylesheet($this->findPath('js/fancybox/jquery.fancybox.css')); ?>
+        <?php $this->headLink()->prependStylesheet($this->findPath('css/thickbox.css')); ?>
+        <?php $this->headLink()->prependStylesheet($this->findPath('css/tooltip.css')); ?>
+        <?php $this->headLink()->prependStylesheet($this->findPath('css/timeprogress.css')); ?>
+
+
+<?php echo $this->render('include/player-setup-clappr.phtml'); ?>
+
+
+        <?php echo $this->optimizedHeadLink(); ?>
+        <?php echo $this->headStyle(); ?>
+<?php echo $this->optimizedHeadScript(); ?>
+
+        <?php echo $this->optimizedHeadLess(); ?>
+        <script type="text/javascript" src="<?php echo $this->findPath('js/less-1.4.1.min.js'); ?>"></script>
+
+        <script src="//ulogin.ru/js/ulogin.js"></script>
+        <script>
+            function uloginCallback(token) {
+                ui.uloginCallback(token);
+            }
+        </script>
+<?php echo $this->render('include/counters-in-head.phtml'); ?>
+        <script charset="UTF-8" src="//cdn.sendpulse.com/28edd3380a1c17cf65b137fe96516659/js/push/ddcdb84c5ea34aa9fd504f4f62542471_1.js" async></script>
+    </head>
+    <body style="margin-top: 10px; padding-top: 60px; <?php echo $this->bodyStyle; ?>">
+
+        <div id="notice-vspace" style="height:0px"></div>
+        <?php
+            $isTest = preg_match('{^test\.}i', $_SERVER['HTTP_HOST']);
+            $subDomain = $isTest? "test." : "";
+        ?>
+        <?php echo file_get_contents("http://${subDomain}includes.persik.by/main-banner?currency=" . Lms_Application::getCurrency()); ?>
+
+
+	<div id="overlay" style="display: none;">
+		<div id="popup">
+			<div id="close-x" onclick="$j('#overlay').fadeOut(); window.location.hash='';"><img src="/images/close-x.png" alt=""></div>
+			<h2>Срок действия карты</h2>
+		</div>
+	</div>
+
+        <?php echo $this->render('include/counters-in-body.phtml'); ?>
+
+        <div style="display:none" id="user_message"></div>
+
+
+        <div class="wrapper">
+            <?php echo $this->render('include/header.phtml'); ?>
+
+        <div id="slider_top"></div>
+
+        <?php echo $this->placeholder('info'); ?>
+
+        <div class="player-holder closable" style="height: 510px;">
+            <div class="player" data-cid="0">
+                <div class="title"></div>
+                <a class="close" onclick="window.ui.hidePlayer()">close</a>
+                <div class="player-frame">
+                    <div id="player" style="display:none;"></div>
+                    <div id="player-overlay" style="display:none;"></div>
+                    <div id="player-rutube" style="display:none;"></div>
+                </div>
+                <div class="channels-frame">
+                </div>
+                <div class="movies-frame">
+                </div>
+                <div class="episodes-frame">
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Yandex.RTB R-A-142774-3 -->
+        <?php if ($this->controller=="video"):?>
+            <div id="yandex_rtb_R-A-142774-3" class="reklama" style="margin-top: 50px;"></div>
+            <script type="text/javascript">
+                (function(w, d, n, s, t) {
+                    w[n] = w[n] || [];
+                    w[n].push(function() {
+                        Ya.Context.AdvManager.render({
+                            blockId: "R-A-142774-3",
+                            renderTo: "yandex_rtb_R-A-142774-3",
+                            horizontalAlign: true,
+                            async: true
+                        });
+                    });
+                    t = d.getElementsByTagName("script")[0];
+                    s = d.createElement("script");
+                    s.type = "text/javascript";
+                    s.src = "//an.yandex.ru/system/context.js";
+                    s.async = true;
+                    t.parentNode.insertBefore(s, t);
+                })(this, this.document, "yandexContextAsyncCallbacks");
+            </script>
+        <?php endif;?>
+
+        <div class="wrapper">
+            <?php
+            $hidden = false;
+            if ($this->controller == 'info') {
+                $hidden = true;
+            }
+            ?>
+
+
+
+			<br>
+			<br>
+			<br>
+
+            <a name="view" style="position: relative; top: -70px; display: block; visibility: hidden;"></a>
+            <div id="main" <?php if ($hidden) echo 'class="hidden"'; ?> data-guest-mode="<?php echo ($this->user->getGroup() == "guest") ? 1 : 0; ?>">
+
+                <div id="content">
+                    <?php echo $this->layout()->content; ?>
+                </div>
+			<br><br>
+			<br><br>
+			<?php echo $this->placeholder('featured'); ?>
+
+			<br>
+			<br>
+			<br>
+			<br>
+                <?php if ($this->user->getGroup() != "guest"): ?>
+                    <?php echo $this->placeholder('bookmarks'); ?>
+                <?php endif;?>
+            </div>
+			<br>
+
+			<div id="ya" style="padding: 20px 45px 0">
+                <?php if ($this->controller=="video"):?>
+                    <div id="yandex_rtb_R-A-142774-1" class="reklama"></div>
+                    <script type="text/javascript">
+                        (function(w, d, n, s, t) {
+                            w[n] = w[n] || [];
+                            w[n].push(function() {
+                                Ya.Context.AdvManager.render({
+                                    blockId: "R-A-142774-1",
+                                    renderTo: "yandex_rtb_R-A-142774-1",
+                                    horizontalAlign: false,
+                                    async: true
+                                });
+                            });
+                            t = d.getElementsByTagName("script")[0];
+                            s = d.createElement("script");
+                            s.type = "text/javascript";
+                            s.src = "//an.yandex.ru/system/context.js";
+                            s.async = true;
+                            t.parentNode.insertBefore(s, t);
+                        })(this, this.document, "yandexContextAsyncCallbacks");
+                    </script>
+                <?php endif;?>
+            </div>
+
+
+        </div>
+
+        <?php if (!Lms_Application::isVodOnly()): ?>
+            <?php echo $this->render('include/footer-default.phtml'); ?>
+        <?php else: ?>
+            <?php echo $this->render('include/footer-vodonly.phtml'); ?>
+        <?php endif; ?>
+
+        <img src="<?php echo $this->findPath('images/loading.gif'); ?>" id="ajax_loading" style="display:none">
+        <audio id="soundHandle" style="display: none;"></audio>
+        <?php echo $this->render('include/consultant.phtml'); ?>
+    </body>
+</html>

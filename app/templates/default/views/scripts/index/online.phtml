@@ -1,0 +1,16 @@
+<div class="section section-thumbs">
+    <div class="container">
+        <div class="row">
+
+            <? foreach ($this->itemsFuture as $item): ?>
+                <div class="col-md-4">
+                    <a href="<?=$item['url']?>"><img src="/images/fifa-bg.jpg" alt=""></a>
+                    <span><a href="<?=$item['url']?>"><?=$item['cmd1']['name_ru']?> - <?=$item['cmd2']['name_ru']?>, <?=$item['date_ru']?></a></span>
+                </div>
+            <? endforeach ?>
+
+        </div>
+
+
+    </div>
+</div>

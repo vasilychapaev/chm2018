@@ -1,0 +1,10 @@
+2018-06-15T16:45:28+03:00 127.0.0.1(3279) CRIT (2): Invalid controller specified (error)
+2018-06-15T16:45:28+03:00 127.0.0.1(3279) CRIT (2): #0 /Users/chapaev/Sites/persik/persik-libs/tplib/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /Users/chapaev/Sites/persik/football-app/app/includes/Lms/Application.php(256): Zend_Controller_Front->dispatch(Object(Zend_Controller_Request_Http))
+#2 /Users/chapaev/Sites/persik/football-app/index.php(4): Lms_Application::run()
+#3 {main}
+2018-06-15T17:57:06+03:00 127.0.0.1(3278) CRIT (2): Invalid controller specified (error)
+2018-06-15T17:57:06+03:00 127.0.0.1(3278) CRIT (2): #0 /Users/chapaev/Sites/persik/persik-libs/tplib/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /Users/chapaev/Sites/persik/football-app/app/includes/Lms/Application.php(256): Zend_Controller_Front->dispatch(Object(Zend_Controller_Request_Http))
+#2 /Users/chapaev/Sites/persik/football-app/index.php(4): Lms_Application::run()
+#3 {main}
