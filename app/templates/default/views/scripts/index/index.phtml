@@ -2,12 +2,16 @@
     <div class="container">
         <div class="row">
 
-            <? foreach ($this->today as $item): ?>
-            <div class="col-md-4">
-                <a href="<?=$item['url']?>"><img src="/images/fifa-bg.jpg" alt=""></a>
-                <span><a href="<?=$item['url']?>"><?=$item['cmd1']['name_ru']?> - <?=$item['cmd2']['name_ru']?>, <?=$item['date_ru']?></a></span>
-            </div>
-            <? endforeach ?>
+            <? if ($this->itemsNow):
+                foreach ($this->itemsNow as $item): ?>
+                <div class="col-md-4">
+                    <a href="<?=$item['url']?>"><img src="<?=$item['thumb']?>" alt=""></a>
+                    <span><a href="<?=$item['url']?>"><?=$item['cmd1']['name_ru']?> - <?=$item['cmd2']['name_ru']?>, <?=$item['date_ru']?></a></span>
+                </div>
+                <? endforeach;
+            else: ?>
+                <div class="text-center">Сейчас трансляций нет</div>
+            <? endif ?>
 
         </div>
 
@@ -27,8 +31,8 @@
 
             <? foreach ($this->itemsFuture as $item): ?>
             <div class="col-md-4">
-                <a href="<?=$item['url']?>"><img src="/images/fifa-bg.jpg" alt=""></a>
-                <span><a href="<?=$item['url']?>"><?=$item['cmd1']['name_ru']?> - <?=$item['cmd2']['name_ru']?>, <?=$item['date_ru']?></a></span>
+                <a href="<?=$item['url']?>"><img src="<?=$item['thumb']?>" alt=""></a>
+                <span><a href="<?=$item['url']?>"><?=$item['cmd1']['name_ru']?> - <?=$item['cmd2']['name_ru']?>, <?=$item['datetime_ru']?></a></span>
             </div>
             <? endforeach ?>
 
@@ -48,14 +52,14 @@
     <div class="container">
         <div class="row">
             <div class="h-green-square"></div>
-            <h2>Архив 72 часа</h2>
+            <h2>Архив 5 дней</h2>
         </div>
 
         <div class="row">
 
             <? foreach ($this->itemsArchive as $item): ?>
                 <div class="col-md-4">
-                    <a href="<?=$item['url']?>"><img src="/images/fifa-bg.jpg" alt=""></a>
+                    <a href="<?=$item['url']?>"><img src="<?=$item['thumb']?>" alt=""></a>
                     <span><a href="<?=$item['url']?>"><?=$item['cmd1']['name_ru']?> - <?=$item['cmd2']['name_ru']?>, <?=$item['date_ru']?></a></span>
                 </div>
             <? endforeach ?>

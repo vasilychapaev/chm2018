@@ -8,7 +8,7 @@
     <title><?php echo $this->title; ?></title>
 
     <link href="/css/bootstrap.css" rel="stylesheet">
-    <link href="/css/styles.css" rel="stylesheet">
+    <link href="/css/styles.css?2" rel="stylesheet">
 
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
@@ -56,13 +56,15 @@
 </nav>
 
 
+<? if (strpos($_SERVER['REQUEST_URI'], '/login/') === false): ?>
 <div class="section section-buttons">
     <div class="container">
-        <a href="/archive/">Архив матчей</a>
-        <a href="/online/">Прямая трансляция</a>
+        <a href="/">Прямая трансляция</a>
         <a href="/future/">Будущие матчи</a>
+        <a href="/archive/">Архив матчей</a>
     </div>
 </div>
+<? endif ?>
 
 
 

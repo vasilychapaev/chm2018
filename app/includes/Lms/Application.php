@@ -532,17 +532,6 @@ class Lms_Application
                                ->setDefaultAction(self::getConfig('router', 'default', 'action'));
 
         $router = self::$_frontController->getRouter();
-//        echo '<pre>';print_r(self::$_frontController);exit;
-
-        $router->addRoute(
-            'default',
-            new Zend_Controller_Router_Route('info/:action/*',
-                array(
-                    'controller' => 'index',
-                    'action'     => 'index'
-                )
-            )
-        );
 
 
         $router->addRoute(
@@ -634,8 +623,9 @@ class Lms_Application
 
 
         $router->addRoute(
-            'vod',
-            new Zend_Controller_Router_Route('video/:id/*',
+            'vod-test',
+            new Zend_Controller_Router_Route('vod/*',
+//            new Zend_Controller_Router_Route('vod/:id/*',
                 array(
                     'controller' => 'video',
                     'action' => 'vod',
@@ -643,26 +633,11 @@ class Lms_Application
                 array('id' => '\d+')
             )
         );
-        
-        $router->addRoute(
-            'bookmarks',
-            new Zend_Controller_Router_Route('bookmarks',
-                array(
-                    'controller' => 'video',
-                    'action' => 'bookmarks'
-                )
-            )
-        );
-        
-        $router->addRoute(
-            'search',
-            new Zend_Controller_Router_Route('search/*',
-                array(
-                    'controller' => 'video',
-                    'action' => 'search',
-                )
-            )
-        );
+
+//        echo '<pre>';print_r($router);exit;
+//        echo '<pre>';print_r(self::$_frontController);exit;
+
+
     }
     
     public static function initView()

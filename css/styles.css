@@ -199,6 +199,8 @@ h2 {
       width: 178px;
       height: 30px;
       margin-top: 5px; }
+  .section-login .form-email .error {
+    color: red; }
   .section-login .form-email div.button {
     margin-top: 10px; }
     .section-login .form-email div.button button {

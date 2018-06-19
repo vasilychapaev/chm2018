@@ -41,8 +41,8 @@ $config['databases']['main'] = array(
     'debug' => 0
 );
 $config['databases']['topology'] = array(
-//    'connectUri' => 'mysqli://rakovsky:Per$ikRul1t@10.10.10.31/topology?persist=1',
-    'connectUri' => 'mysqli://root:root@localhost/topology?persist=1',
+    'connectUri' => 'mysqli://rakovsky:Per$ikRul1t@10.10.10.31/topology?persist=1',
+//    'connectUri' => 'mysqli://root:root@localhost/topology?persist=1',
     'initSql' => "SET NAMES utf8",
     'debug' => 0
 );

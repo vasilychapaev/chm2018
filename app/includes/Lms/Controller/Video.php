@@ -7,7 +7,8 @@ class Lms_Controller_Video extends Zend_Controller_Action
 //        die('video.ctrl - init');
     }
 
-    public function indexAction() {
+    public function indexAction()
+    {
 //        echo 'video.ctrl - index.action';
         die('video.ctrl - index.action');
     }
@@ -26,6 +27,10 @@ class Lms_Controller_Video extends Zend_Controller_Action
         $this->view->title = "Будущие записи Чемпионата мира по футболу 2018";
     }
 
+    public function vodAction()
+    {
+//        die('vod action');
+    }
 
 
 }

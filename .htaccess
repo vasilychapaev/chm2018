@@ -1,7 +1,9 @@
 RewriteEngine On
 
-RewriteCond %{REQUEST_URI} ^/(images)
+RewriteCond %{REQUEST_URI} ^/(images|js|css)
 RewriteRule ^ - [L,QSA]
+
+RewriteRule ^favicon\.ico /favicon/favicon.ico [L]
 
 RewriteCond %{REQUEST_FILENAME} -s [OR]
 RewriteCond %{REQUEST_FILENAME} -l [OR]

@@ -11,30 +11,34 @@
                     </h1>
                     <br>
                     <?/*<div class="when">25 июня 2018, понедельник, в 17:00 (мск)</div>*/?>
-                    <div class="when"><?=$this->tvshow['datetime_ru']?></div>
+                    <div class="when"><?=$this->item['datetime_ru']?></div>
                     <div class="stage">Групповой этап ЧМ-2018</div>
                     <?/*<div class="where">Самара, стадион «Самара Арена»</div>*/?>
-                    <div class="where"><?=$this->tvshow['city']?></div>
+                    <div class="where"><?=$this->item['city']?></div>
 
                     <div class="player-wrapper">
-                        <div id="player"></div>
+                        <? if ($this->item['is_online'] or $this->item['is_archive']): ?>
 
-                        <script src="/js/clappr.min.js"></script>
+                            <div id="player"></div>
 
-                        <script>
-                            $(document).ready(function () {
-                                var player = new Clappr.Player({
-                                    parentId: "#player",
-//                                    source: "https://bamper.by/upload/futbik11.mp4",
-                                    source: "<?=$this->stream_url?>",
-                                    width: 600,
-                                    height: 300,
-                                    autoPlay: true
-//                                    autoPlay: false
+                            <script src="/js/clappr.min.js"></script>
+
+                            <script>
+                                $(document).ready(function () {
+                                    var player = new Clappr.Player({
+                                        parentId: "#player",
+    //                                    source: "https://bamper.by/upload/futbik11.mp4",
+                                        source: "<?=$this->stream_url?>",
+                                        width: 600,
+                                        height: 339,
+                                        autoPlay: true
+    //                                    autoPlay: false
+                                    });
+                                    Clappr.Log.setLevel(0);
                                 });
-                                Clappr.Log.setLevel(0);
-                            });
-                        </script>
+                            </script>
+
+                        <? endif ?>
                     </div>
 
                 </div>

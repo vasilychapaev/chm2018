@@ -1,0 +1,55 @@
+<?php
+$this->subject = '%F0%9F%8D%91 Регистрация в телевизионном сервисе';
+?>
+<?php include __DIR__ . '/include/header.phtml';?>
+
+<p style="margin-top: 0px; margin-bottom: 10px; text-align: left;">
+    <br>
+    <span style="color:#000000; font-size: 18px;line-height:1.5em;"><strong>Добрый день!</strong></span><br>
+</p>
+
+<p style="margin-top: 0px; margin-bottom: 10px; text-align: left;color:#000000; font-size: 16px;">
+    Благодарим, что выбрали сервис <strong>Persik</strong>!<br>
+    Наша команда постарается сделать Ваш просмотр телевидения комфортным и удобным!<br><br>
+</p>
+
+<table style="">
+    <tr>
+        <td align="center" bgcolor="#FF8200" style="color: #fff; font-size: 12px; font-weight: bold; border: 2px solid #FF8200; border-radius: 5px 0 0 5px;" width="100" height="42">
+            ВАШ ЛОГИН
+        </td>
+        <td align="center" bordercolor="#FF8200" style="padding: 0 10px; border: 2px solid #FF8200; border-radius: 0 5px 5px 0;" width="158">
+            <?php echo $this->email;?>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3" height="10"></td>
+    </tr>
+    <tr>
+        <td align="center" bgcolor="#FF8200" style="color: #fff; font-size: 12px; font-weight: bold; border: 2px solid #FF8200; border-radius: 5px 0 0 5px;" width="100" height="42">
+            ПАРОЛЬ
+        </td>
+        <td align="center" bordercolor="#FF8200" style="padding: 0 10px; border: 2px solid #FF8200; border-radius: 0 5px 5px 0;" width="158">
+            <?php echo $this->password;?>
+        </td>
+    </tr>
+</table>
+
+<p style="margin-top: 0px; margin-bottom: 10px; text-align: left;color:#000000; font-size: 16px; text-align: center;">
+    <br>
+    <strong>Пройдя по кнопке, Вы активируете 5 дней бесплатного просмотра<br>телевидения Persik и подтвердите регистрацию в сервисе.</strong>
+</p>
+<p style="margin-top: 0px; margin-bottom: 10px; text-align: center;">
+    <br>
+<table align="center" style="margin: 0px auto;" bgcolor="#59b11f" width="260" height="47" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td align="center" nowrap>
+            <a href="http://russia2018.persik.tv/activate.php?email=<?php echo rawurlencode($this->email);?>&v=<?php echo $this->verificationToken;?>" style="color: #ffffff; text-decoration: none; text-transform: uppercase;" target="_blank">
+                Активировать
+            </a>
+        </td>
+    </tr>
+</table>
+</p>
+
+<?php include __DIR__ . '/include/footer.phtml';?>
