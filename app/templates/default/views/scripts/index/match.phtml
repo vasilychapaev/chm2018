@@ -5,19 +5,19 @@
             <div class="col-md-12">
                 <div class="gazon">
                     <h1>
-                        <?=$this->cmd1['name_ru']?> <img src="<?=$this->cmd1['img']?>" alt="">
+                        <?php echo $this->cmd1['name_ru']?> <img src="<?php echo $this->cmd1['img']?>" alt="">
                         &mdash;
-                        <?=$this->cmd2['name_ru']?> <img src="<?=$this->cmd2['img']?>" alt="">
+                        <?php echo $this->cmd2['name_ru']?> <img src="<?php echo $this->cmd2['img']?>" alt="">
                     </h1>
                     <br>
                     <?/*<div class="when">25 июня 2018, понедельник, в 17:00 (мск)</div>*/?>
-                    <div class="when"><?=$this->item['datetime_ru']?></div>
+                    <div class="when"><?php echo $this->item['datetime_ru']?></div>
                     <div class="stage">Групповой этап ЧМ-2018</div>
                     <?/*<div class="where">Самара, стадион «Самара Арена»</div>*/?>
-                    <div class="where"><?=$this->item['city']?></div>
+                    <div class="where"><?php echo $this->item['city']?></div>
 
                     <div class="player-wrapper">
-                        <? if ($this->item['is_online'] or $this->item['is_archive']): ?>
+                        <?php if ($this->item['is_online'] or $this->item['is_archive']): ?>
 
                             <div id="player"></div>
 
@@ -28,7 +28,7 @@
                                     var player = new Clappr.Player({
                                         parentId: "#player",
     //                                    source: "https://bamper.by/upload/futbik11.mp4",
-                                        source: "<?=$this->stream_url?>",
+                                        source: "<?php echo $this->stream_url?>",
                                         width: 600,
                                         height: 339,
                                         autoPlay: true
@@ -38,7 +38,7 @@
                                 });
                             </script>
 
-                        <? endif ?>
+                        <?php endif ?>
                     </div>
 
                 </div>

@@ -28,11 +28,11 @@
                             <input type="text" name="email" class="form-control">
                         </div>
 
-                        <? if ($this->error): ?>
+                        <?php if ($this->error): ?>
                         <div class="error">
-                            <?=$this->error?>
+                            <?php echo $this->error?>
                         </div>
-                        <? endif ?>
+                        <?php endif ?>
 
                         <div class="button">
                             <button type="submit" class="btn btn-default">Бесплатный доступ</button>

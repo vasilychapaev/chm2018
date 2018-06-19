@@ -56,7 +56,7 @@
 </nav>
 
 
-<? if (strpos($_SERVER['REQUEST_URI'], '/login/') === false): ?>
+<?php if (strpos($_SERVER['REQUEST_URI'], '/login/') === false): ?>
 <div class="section section-buttons">
     <div class="container">
         <a href="/">Прямая трансляция</a>
@@ -64,7 +64,7 @@
         <a href="/archive/">Архив матчей</a>
     </div>
 </div>
-<? endif ?>
+<?php endif ?>
 
 
 

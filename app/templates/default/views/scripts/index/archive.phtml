@@ -2,12 +2,12 @@
     <div class="container">
         <div class="row">
 
-            <? foreach ($this->items as $item): ?>
+            <?php foreach ($this->items as $item): ?>
                 <div class="col-md-4">
-                    <a href="<?=$item['url']?>"><img src="<?=$item['thumb']?>" alt=""></a>
-                    <span><a href="<?=$item['url']?>"><?=$item['cmd1']['name_ru']?> - <?=$item['cmd2']['name_ru']?>, <?=$item['date_ru']?></a></span>
+                    <a href="<?php echo $item['url']?>"><img src="<?php echo $item['thumb']?>" alt=""></a>
+                    <span><a href="<?php echo $item['url']?>"><?php echo $item['cmd1']['name_ru']?> - <?php echo $item['cmd2']['name_ru']?>, <?=$item['date_ru']?></a></span>
                 </div>
-            <? endforeach ?>
+            <?php endforeach ?>
 
 
         </div>
