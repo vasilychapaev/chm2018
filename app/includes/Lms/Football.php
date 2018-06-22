@@ -56,9 +56,9 @@ class Lms_Football
                     JOIN tvshows t2 USING (movie_id)
                     WHERE
                     t2.channel_id IN (10298, 10300)
-                    AND t2.start > ?
+                    AND NOW() < t2.start 
                     AND t1.name LIKE '%Футбол. Чемпионат мира-2018%'
-                    ORDER BY t2.date", date('Y-m-d H:i:s')
+                    ORDER BY t2.start"
         );
 
         foreach ($items as $k => $item)
@@ -78,9 +78,9 @@ class Lms_Football
                     JOIN tvshows t2 USING (movie_id)
                     WHERE
                     t2.channel_id IN (10298, 10300)
-                    AND t2.start < ?
+                    AND NOW() > t2.start
                     AND t1.name LIKE '%Футбол. Чемпионат мира-2018.%'
-                    ORDER BY t2.date desc", date('Y-m-d H:i:s')
+                    ORDER BY t2.date desc"
         );
 
         foreach ($items as $k => $item)
