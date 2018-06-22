@@ -119,8 +119,9 @@ h2 {
     margin-top: 0; }
 
   .navbar-form .wrapper div button {
-    display: inline img;
-      display-margin-top: 0; } }
+    padding: 0; }
+    .navbar-form .wrapper div button img {
+      margin-top: 0; } }
 .section {
   margin-top: 50px; }
   .section hr {
