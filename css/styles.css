@@ -81,6 +81,9 @@ h2 {
   width: 100px;
   margin-right: 50px;
   text-align: center; }
+  @media (min-width: 768px) {
+    .navbar-inverse .navbar-nav > li {
+      margin-right: 0; } }
   .navbar-inverse .navbar-nav > li > a {
     color: #ffffff;
     text-transform: uppercase; }
@@ -251,21 +254,36 @@ footer {
   position: absolute;
   bottom: 0;
   width: 100%; }
-  footer .logo-persik {
-    text-align: right; }
-    footer .logo-persik img {
-      width: 150px; }
-  footer .contacts {
-    line-height: 72px;
+  footer .txt {
+    line-height: 100px;
     vertical-align: middle;
-    text-align: center;
     color: #ffffff; }
-    footer .contacts img {
-      display: inline-block;
+    @media (max-width: 767px) {
+      footer .txt {
+        font-size: 12px; } }
+    footer .txt .logo-persik {
+      width: 150px;
+      margin-left: 10%;
+      margin-top: -30px; }
+      @media (max-width: 767px) {
+        footer .txt .logo-persik {
+          display: block;
+          width: 100px; } }
+    footer .txt .icon-contacts {
       width: 32px;
+      margin-left: 35%;
       margin-right: 10px; }
-  footer .logo-volk img {
-    width: 100%;
-    margin-top: -130px; }
+      @media (min-width: 768px) {
+        footer .txt .icon-contacts {
+          margin-left: 20%; } }
+      @media (max-width: 767px) {
+        footer .txt .icon-contacts {
+          margin-left: 10%;
+          width: 24px; } }
+  footer .logo-volk {
+    text-align: center; }
+    footer .logo-volk img {
+      width: 165px;
+      margin-top: -130px; }
 
 /*# sourceMappingURL=styles.css.map */

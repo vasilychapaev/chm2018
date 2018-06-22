@@ -10,34 +10,41 @@ footer {
   background: url(/images/grass-bg3_.jpg) repeat-x top left;
   background-size: auto 200px;
   padding-top: 75px;
+  //@media (max-width: 767px) {padding-top: 25px;}
 
   position: absolute;
   bottom: 0;
   width: 100%;
 
-  .logo-persik {
-    text-align: right;
-    img {
-      width: 150px;
-    }
-  }
 
-  .contacts {
-    line-height: 72px;
+  .txt {
+    line-height: 100px;
     vertical-align: middle;
-    text-align: center;
     color: $link-color-secondary;
+    @media (max-width: 767px) {font-size:12px}
 
-    img {
-      display: inline-block;
-      width: 32px;
-      margin-right: 10px;
+    .logo-persik {
+      width:150px; margin-left: 10%; margin-top: -30px;
+      @media (max-width: 767px) {display:block;width:100px;}
     }
+
+    .icon-contacts {
+      width: 32px; margin-left: 35%; margin-right: 10px;
+      @media (min-width: 768px) {margin-left: 20%;}
+      @media (max-width: 767px) {margin-left: 10%; width: 24px; }
+
+    }
+
+
   }
 
-  .logo-volk img {
-    width: 100%;
-    margin-top: -130px;
+
+  .logo-volk {
+    text-align: center;
+    img {
+      width: 165px;
+      margin-top: -130px;
+    }
   }
 
 }

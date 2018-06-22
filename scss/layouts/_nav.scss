@@ -48,6 +48,7 @@
 .navbar-inverse .navbar-nav > li {
   width: 100px;
   margin-right: 50px;
+  @media (min-width: 768px) {margin-right: 0}
   text-align: center;
 
   > a {
@@ -56,6 +57,7 @@
 
   }
 }
+
 
 .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > li > a:hover {
   background-color: transparent;
