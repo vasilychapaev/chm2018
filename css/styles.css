@@ -51,6 +51,9 @@ h2 {
 .navbar-brand img {
   height: 40px; }
 
+#navbar ul {
+  float: right; }
+
 .navbar-form {
   display: block;
   text-align: center; }
@@ -69,6 +72,7 @@ h2 {
         margin-top: 5px;
         margin-left: -2px; }
     .navbar-form .wrapper div input {
+      display: inline-block;
       border: 0;
       width: 196px;
       height: 30px;
@@ -92,6 +96,27 @@ h2 {
   background-color: transparent;
   color: #ff9907; }
 
+/* mobile */
+#navbar {
+  background-color: #222; }
+
+@media (max-width: 767px) {
+  .navbar {
+    height: auto; }
+
+  .navbar-brand {
+    padding: 0 15px;
+    margin-top: -5px; }
+
+  #navbar ul {
+    float: none; }
+
+  .navbar-inverse .navbar-nav > li {
+    width: auto;
+    margin-right: 0; }
+
+  .navbar-form .wrapper div {
+    margin-top: 0; } }
 .section {
   margin-top: 50px; }
   .section hr {

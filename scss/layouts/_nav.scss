@@ -8,6 +8,13 @@
   height: 40px;
 }
 
+#navbar {
+  ul {
+    float: right;
+  }
+}
+
+
 .navbar-form {
   display: block;
   text-align: center;
@@ -32,6 +39,7 @@
     }
 
     input {
+      display: inline-block;
       border: 0;
       width: 196px;
       height: 30px;
@@ -62,4 +70,22 @@
 .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > li > a:hover {
   background-color: transparent;
   color: $primary-color;
+}
+
+
+
+/* mobile */
+#navbar {background-color: #222}
+
+@media(max-width: 767px) {
+  .navbar {height: auto}
+  .navbar-brand {padding: 0 15px; margin-top: -5px}
+
+  #navbar {
+    ul {float: none}
+  }
+  .navbar-inverse .navbar-nav > li {width:auto; margin-right: 0;}
+  .navbar-form {
+    .wrapper div {margin-top: 0}
+  }
 }
