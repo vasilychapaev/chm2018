@@ -32,9 +32,12 @@ if (!$user->getEnabled()) {
 //    }
 }
 
+$redirectUrl = $_COOKIE['need_auth_backurl']?:'/';
+setcookie('need_auth_backurl', '', -1);
+
 
 header('HTTP/1.1 302 Moved Temporary');
-header('Location: /');
+header('Location: '.$redirectUrl);
 header("Pragma: public");
 header("Cache-Control: public");
 header("Expires: " . date("r", time() + 600));
