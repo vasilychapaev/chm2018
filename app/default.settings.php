@@ -1,7 +1,7 @@
-<?php 
+<?php
 /**
  * Настройки конфигурации по-умолчанию
- * 
+ *
  * @copyright 2006-2011 LanMediaService, Ltd.
  * @license    http://www.lanmediaservice.com/license/1_0.txt
  * @author Ilya Spesivtsev <macondos@gmail.com>
@@ -13,7 +13,7 @@
  */
 error_reporting(E_ALL);
 
-@setlocale(LC_ALL, array('ru_RU.CP1251','ru_RU.cp1251','ru_SU.CP1251','ru_RU','ru','russian')); 
+@setlocale(LC_ALL, array('ru_RU.CP1251','ru_RU.cp1251','ru_SU.CP1251','ru_RU','ru','russian'));
 @setlocale(LC_NUMERIC, '');
 
 /**
@@ -32,7 +32,7 @@ $config['logger']->setEventItem('ip', Lms_Ip::getIp());
 /**
  * Настройка языков
  */
-$config['langs']['supported'] = array('ru'=>'Русский', 
+$config['langs']['supported'] = array('ru'=>'Русский',
                                       'en'=>'English (US)');
 $config['langs']['default'] = 'ru';
 
@@ -60,7 +60,7 @@ $config['parser_service']['url'] = 'http://service.lanmediaservice.com/2/actions
 $config['http_client']['maxredirects'] = 5;
 $config['http_client']['timeout'] = 60;
 $config['http_client']['useragent'] = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; ru; rv:1.9.1.5) Gecko/20091102 Firefox/3.5.5 (.NET CLR 3.5.30729)';
-                       
+
 
 $config['hit_factor'] = 3;//коэффициент скачиваний выше среднего, чтобы считаться хитом
 
@@ -161,7 +161,8 @@ $config['mail']['transport']['noreply@persik.tv'] = new Zend_Mail_Transport_Smtp
     'password' => '65yc!dzVwVRY',
     'ssl' => 'tls')
 );
-$config['mail']['transport']['do_not_reply@persik.by'] = new Zend_Mail_Transport_Smtp('10.10.10.41');
+// $config['mail']['transport']['do_not_reply@persik.by'] = new Zend_Mail_Transport_Smtp('10.10.10.41');
+// $config['mail']['transport']['do_not_reply@persik.by'] = new Zend_Mail_Transport_Smtp('10.10.10.20');
 
 $config['mail']['staff'] = 'info@persik.by';
 
@@ -219,7 +220,7 @@ if (!empty($_SERVER['SERVER_NAME']) && preg_match('{(^m|\.m)\.}i', $_SERVER['SER
 }
 
 if (!empty($_SERVER['SERVER_NAME']) && preg_match('{^bn\.}i', $_SERVER['SERVER_NAME'])) {
-    $config['subtemplate'] = 'bn'; 
+    $config['subtemplate'] = 'bn';
 }
 
 $config['apis']['facebook']  = array(
@@ -262,7 +263,7 @@ $config['vod']['masks'] = array(
 $config['registration']['trial2'] = 95;
 
 $config['iptv_portal'] = array(
-    'username' => 'admin', 
+    'username' => 'admin',
     'password' => 'cA61oCx9zr',
     'auth_uri' => 'https://admin.persik.iptvportal.ru/api/jsonrpc/',
     'jsonsql_uri' => 'https://admin.persik.iptvportal.ru/api/jsonsql/',
@@ -298,8 +299,8 @@ $config['router']['default']['action'] = 'index';
 
 if (!empty($_SERVER['SERVER_NAME']) && preg_match('{persik\.tv}i', $_SERVER['SERVER_NAME']) && !preg_match('{player\.persik\.tv}i', $_SERVER['SERVER_NAME'])) {
     $config['is_persik_tv'] = true;
-    $config['router']['default']['controller'] = 'info';
-    $config['router']['default']['action'] = 'landing';
+    $config['router']['default']['controller'] = 'index';
+    $config['router']['default']['action'] = 'index';
     $config['ga']['account'] = 'UA-64641748-1';
 }
 
@@ -326,7 +327,7 @@ $config['pay_sys_support'] = array(
 );
 
 if (!empty($_SERVER['SERVER_NAME']) && preg_match('{(onlineweb\.tv|player\.persik|tv\.unet\.)}i', $_SERVER['SERVER_NAME'])) {
-    $config['subtemplate'] = 'lite';    
+    $config['subtemplate'] = 'lite';
 }
 
 $config['vod_only'] = false;

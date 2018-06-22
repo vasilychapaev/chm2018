@@ -1,7 +1,7 @@
 <?php
 /**
  * Инициализация приложения
- * 
+ *
  * @copyright 2006-2011 LanMediaService, Ltd.
  * @license    http://www.lanmediaservice.com/license/1_0.txt
  * @author Ilya Spesivtsev <macondos@gmail.com>
@@ -10,7 +10,7 @@
 
 class Lms_Application
 {
-    
+
     private static $_config;
 
     /**
@@ -52,13 +52,13 @@ class Lms_Application
      * @var string
      */
     private static $_device;
-    
+
     /**
      * Текущая валюта
      * @var string
      */
     private static $_currency;
-    
+
     /**
      * Текущий язык
      * @var string
@@ -130,7 +130,7 @@ class Lms_Application
     {
         return self::$_mainTimer;
     }
-    
+
     private static $_httpClient;
 
     private static $_mplayer;
@@ -161,12 +161,12 @@ class Lms_Application
         Zend_Registry::set('Zend_Locale', $locale);
         return self::$_lang;
     }
-    
+
     public static function setRequest()
     {
         self::$_request = new Zend_Controller_Request_Http();
     }
-    
+
     public static function runApi()
     {
         self::setRequest();
@@ -225,7 +225,7 @@ class Lms_Application
         self::initVariables();//зависит от initDb
         self::initConfigFromDb();//зависит от initDb
     }
-    
+
     public static function initApiController()
     {
         self::$_apiController = Lms_Api_Controller::getInstance();
@@ -249,7 +249,7 @@ class Lms_Application
         $channel->setResponse($response);
         // Start output buffering
         ob_start();
-        try { 
+        try {
             self::prepare();
             Lms_Debug::debug('Request URI: ' . $_SERVER['REQUEST_URI']);
             try {
@@ -286,7 +286,7 @@ class Lms_Application
         self::initView();//зависит от initConfig, initFrontController,
                          //initAcl, initTranslate
     }
-    
+
     public static function initEnvironmentApi()
     {
         ini_set('max_execution_time', 0);
@@ -308,9 +308,9 @@ class Lms_Application
             $_POST = Lms_Array::recursiveStripSlashes($_POST);
             $_REQUEST = Lms_Array::recursiveStripSlashes($_REQUEST);
             $alreadyStriped = true;
-        } 
+        }
     }
-    
+
     public static function initConfig()
     {
 
@@ -357,19 +357,19 @@ class Lms_Application
             }
         }
     }
-    
+
     public static function initSessions()
     {
         Zend_Session::start();
     }
-    
+
     public static function initDebug()
     {
         Lms_Debug::setLogger(self::$_config['logger']);
         self::$_mainTimer = new Lms_Timer();
         self::$_mainTimer->start();
     }
-    
+
     public static function initErrorHandler()
     {
         Lms_Debug::initErrorHandler();
@@ -400,7 +400,7 @@ class Lms_Application
         if (self::$_rootUrl=='/') {
             self::$_rootUrl = '';
         }
-        
+
         Lms_Item::setDb(Lms_Db::get("main"), Lms_Db::get("main"));
         Lms_Item::setDb(Lms_Db::get("topology"), Lms_Db::get("topology"), ['Point', 'Template', 'Process']);
         Lms_Item_Preloader::setDb(Lms_Db::get("main"));
@@ -408,12 +408,12 @@ class Lms_Application
         Lms_Item_Struct_Generator::setStoragePath(
             APP_ROOT . '/includes/Lms/Item/Struct'
         );
-         
+
         Lms_Text::setEncoding('UTF-8');
         Lms_Text::enableMultiByte();
         Lms_Api_Formatter_Ajax::setEncoding('UTF-8');
         Lms_Api_Formatter_Json::setEncoding('UTF-8');
-        
+
         Lms_Thumbnail::setHttpClient(self::getHttpClient());
         Lms_Thumbnail::setThumbnailScript(rtrim(self::$_rootUrl, '/\\') . '/' . self::getConfig('thumbnail', 'script'), self::getConfig('thumbnail', 'key'));
         Lms_Thumbnail::setImageDir(
@@ -424,7 +424,7 @@ class Lms_Application
         );
         Lms_Thumbnail::setErrorImagePath(rtrim(dirname(APP_ROOT)) . '/media/error.png');
         Lms_Thumbnail::setCache(self::getConfig('thumbnail', 'cache'));
-        
+
         Lms_View_Helper_OptimizedHeadScript::setCacheDir(
             rtrim($_SERVER['DOCUMENT_ROOT'] . self::$_rootUrl, '/\\') . '/media/cache/js'
         );
@@ -434,7 +434,7 @@ class Lms_Application
         Lms_View_Helper_OptimizedHeadLess::setCacheDir(
             rtrim($_SERVER['DOCUMENT_ROOT'] . self::$_rootUrl, '/\\') . '/media/cache/css'
         );
-        
+
         Lms_Service_Images::setAppKey(self::getConfig('image_service', 'api_key'));
 
         self::$_price = new Lms_Price();
@@ -475,7 +475,7 @@ class Lms_Application
                    ->add(new Zend_Acl_Resource('image-proxy'))
                    ->add(new Zend_Acl_Resource('email'))
                     ;
-                   
+
 
         self::$_acl->allow('admin')
                    ->allow('moder', array('movie', 'comment', 'image-proxy'))
@@ -486,10 +486,10 @@ class Lms_Application
                    ->allow('user', array('bookmark', 'rating'))
                    ->allow('user', array('comment'), 'post')
                    ->allow('guest', array('movie'), 'view');
-                   
+
         Lms_User::setAcl(self::$_acl);
         self::$_user = Lms_User::getUser();
-    } 
+    }
 
     public static function initFrontController()
     {
@@ -501,7 +501,7 @@ class Lms_Application
                                ->setDefaultControllerName('index')
                                ->setDefaultAction('index')
                                ->setParams(array());
-   
+
         if (!self::$_request) {
             Lms_Application::setRequest();
         }
@@ -509,7 +509,7 @@ class Lms_Application
         self::$_frontController->setRequest(self::$_request);
         return self::$_frontController;
     }
-    
+
     public static function initTranslate()
     {
         $db = Lms_Db::get('main');
@@ -518,14 +518,14 @@ class Lms_Application
         self::$_translate = new Zend_Translate('array',
                                                 $translation,
                                                 self::$_lang);
-        
+
         self::$_translate->setOptions(
             array('log' => Lms_Debug::getLogger(),
                   'logUntranslated' => true)
         );
 
-    }    
-    
+    }
+
     public static function initRoutes()
     {
         self::$_frontController->setDefaultControllerName(self::getConfig('router', 'default', 'controller'))
@@ -533,16 +533,6 @@ class Lms_Application
 
         $router = self::$_frontController->getRouter();
 
-
-        $router->addRoute(
-            'online',
-            new Zend_Controller_Router_Route('online/*',
-                array(
-                    'controller' => 'index',
-                    'action'     => 'today'
-                )
-            )
-        );
 
         $router->addRoute(
             'future',
@@ -554,15 +544,6 @@ class Lms_Application
             )
         );
 
-        $router->addRoute(
-            'future_id',
-            new Zend_Controller_Router_Route('future/:id/*',
-                array(
-                    'controller' => 'index',
-                    'action'     => 'future'
-                )
-            )
-        );
 
         $router->addRoute(
             'archive',
@@ -606,6 +587,16 @@ class Lms_Application
         );
 
 
+        $router->addRoute(
+            'regcomplete',
+            new Zend_Controller_Router_Route('registrationsuccess/*',
+                array(
+                    'controller' => 'index',
+                    'action'     => 'registrationsuccess'
+                )
+            )
+        );
+
 
         $router->addRoute(
             'match',
@@ -619,27 +610,29 @@ class Lms_Application
 
 
 
-
-
-
         $router->addRoute(
-            'vod-test',
-            new Zend_Controller_Router_Route('vod/*',
-//            new Zend_Controller_Router_Route('vod/:id/*',
+            'mailer',
+            new Zend_Controller_Router_Route('mailer/*',
                 array(
-                    'controller' => 'video',
-                    'action' => 'vod',
-                ),
-                array('id' => '\d+')
+                    'controller' => 'index',
+                    'action'     => 'mailer'
+                )
             )
         );
 
-//        echo '<pre>';print_r($router);exit;
-//        echo '<pre>';print_r(self::$_frontController);exit;
+        $router->addRoute(
+            'dev',
+            new Zend_Controller_Router_Route('dev/*',
+                array(
+                    'controller' => 'index',
+                    'action'     => 'dev'
+                )
+            )
+        );
 
 
     }
-    
+
     public static function initView()
     {
         //LIFO order
@@ -651,14 +644,14 @@ class Lms_Application
         $relativeTemplateUrls = array(
             '/' . self::$_config['template']
         );
-        
+
         if (!empty(self::$_config['subtemplate'])) {
             Lms_Debug::debug(self::$_config['subtemplate']);
             self::$_scriptsTemplates[] =  APP_ROOT . '/templates/' . self::$_config['subtemplate'];
             array_unshift($relativeTemplateUrls, '/' . self::$_config['subtemplate']);
         }
         //rsort(self::$_scriptsTemplates);
-        
+
         self::$_publicTemplates = array();
         foreach ($relativeTemplateUrls as $relativeTemplateUrl) {
             $path = $_SERVER['DOCUMENT_ROOT']
@@ -710,9 +703,9 @@ class Lms_Application
         Zend_Layout::startMvc();
 
         $view->tabs = array();
-     
+
         self::$view = $view;
-        
+
         return $view;
     }
 
@@ -721,7 +714,7 @@ class Lms_Application
         if (self::getConfig('optimize', 'classes_combine')) {
             Lms_NameScheme_Autoload::compileTo(APP_ROOT . '/includes/All.php');
         }
-        
+
         foreach (self::$_config['databases'] as $dbAlias => $dbConfig) {
             if (Lms_Db::isInstanciated($dbAlias)) {
                 $db = Lms_Db::get($dbAlias);
@@ -746,12 +739,12 @@ class Lms_Application
         $time = round(1000 *self::$_mainTimer->getSumTime());
         Lms_Debug::debug("Execution time: $time ms");
     }
-    
+
     public static function getLang()
     {
         return self::$_lang;
     }
-    
+
     public static function setLang($lang)
     {
         self::$_lang = $lang;
@@ -806,7 +799,7 @@ class Lms_Application
             );
         }
         return self::$_httpClient;
-    }    
+    }
 
     public static function getMplayer()
     {
@@ -815,7 +808,7 @@ class Lms_Application
             self::$_mplayer->setTempPath(self::getConfig('mplayer','tmp'));
         }
         return self::$_mplayer;
-    }    
+    }
 
     public static function getLeechProtectionCode($array)
     {
@@ -823,7 +816,7 @@ class Lms_Application
         $str .= self::getConfig('antileechkey')? self::getConfig('antileechkey') : "secret";
         return md5($str);
     }
-    
+
     public static function thumbnail($imgPath, $width = 0, $height = 0, $defer = false, $force = true)
     {
         if ($imgPath && !preg_match('{^https?://}i', $imgPath)) {
@@ -838,7 +831,7 @@ class Lms_Application
         }
         return $t;
     }
-    
+
     public static function loadAuthToken()
     {
         if (isset($_POST['auth_token'])) {
@@ -853,12 +846,12 @@ class Lms_Application
         return null;
     }
 
-    public static function saveAuthToken($token) 
+    public static function saveAuthToken($token)
     {
         setcookie("auth_token", $token, time()+1209600, "/");
     }
 
-    public static function setAuthData($login, $pass, $remember = true) 
+    public static function setAuthData($login, $pass, $remember = true)
     {
 //        session_start();
         Zend_Session::start();
@@ -897,8 +890,8 @@ class Lms_Application
             } else if (strlen($pureNames["international_name"]) < strlen($name)) $pureNames["international_name"] = $name;
         }
         return $pureNames;
-    }    
-  
+    }
+
 
     public static function formatMetainfo($metainfo)
     {
@@ -912,7 +905,7 @@ class Lms_Application
             'XviD MPEG-4 (www.xvid.org)' => 'XviD',
             'Intel ITU H.264 Videoconferencing' => 'H.264',
         );
-        
+
         if (!$metainfo || empty($metainfo['playtime_seconds'])) {
             return null;
         }
@@ -951,7 +944,7 @@ class Lms_Application
             if (isset($stream['name'])) {
                 $audioInfos[] = $stream['name'];
             }
-            
+
             $compactMetainfo['audio'][$streamNum]['label'] = $codec;
             if ($stream['bitrate']) {
                 $compactMetainfo['audio'][$streamNum]['label'] .= " " . round($stream['bitrate']/1000) . " kbps";
@@ -963,7 +956,7 @@ class Lms_Application
         }
         return $compactMetainfo;
     }
-    
+
     public static function getType($path, $isDir)
     {
         $videoExtensions = array('avi', 'mkv', 'mp4', 'mov', 'flv', 'vob');
@@ -982,7 +975,7 @@ class Lms_Application
         $path = rtrim($path, "\\/");
         return preg_replace('{\\\}', '/', $path);
     }
-    
+
     public static function calcLevel($path)
     {
         $path = self::normalizePath($path);
@@ -993,14 +986,14 @@ class Lms_Application
     {
         $directory = self::normalizePath($directory);
         $subpath = self::normalizePath($subpath);
-        
+
         if (self::isWindows()) {
             return (stripos($subpath, $directory)===0);
         } else {
             return  (strpos($subpath, $directory)===0);
         }
     }
-    
+
     public static function getTargetStorage($threshold = 0.02)
     {
         if (!self::getConfig('storages')) {
@@ -1013,9 +1006,9 @@ class Lms_Application
             $storages[$path] = $free;
             if ($free > $maxFree) {
                 $maxFree = $free;
-            } 
+            }
         }
-        
+
         foreach ($storages as $path => $free) {
             if ($free < ($maxFree * (1 - $threshold) )) {
                 $storages[$path] = null;
@@ -1025,12 +1018,12 @@ class Lms_Application
         $targetStorage = array_rand($storages);
         return self::normalizePath($targetStorage);
     }
-    
+
     public static function isWindows()
     {
         return strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
     }
-    
+
     public static function prepareTextIndex($text, $type, $id, &$trigramValues, &$suggestionValues)
     {
         if (!trim($text)) {
@@ -1052,7 +1045,7 @@ class Lms_Application
                 $trigramValues[] = sprintf(
                     "(%s, %s, %d)",
                     $db->escape(strtolower($trigram)),
-                    $db->escape($type), 
+                    $db->escape($type),
                     $id
                 );
             }
@@ -1071,7 +1064,7 @@ class Lms_Application
             $suggestionValues[] = sprintf(
                 "(%s, %s ,%d)",
                 $db->escape(trim($word, ' .\'"')),
-                $db->escape($type), 
+                $db->escape($type),
                 $id
             );
         }
@@ -1087,14 +1080,14 @@ class Lms_Application
             }
             $cmd = 'start ' . escapeshellarg($task) . ' ' . escapeshellarg($php) . ' ' . $script;
             //Lms_Debug::debug($cmd);
-            pclose(popen($cmd, "r"));    
+            pclose(popen($cmd, "r"));
         } else {
             $script = APP_ROOT . '/tasks/' . $task;
             $php = APP_ROOT . '/tasks/php';
             exec(escapeshellarg($php) . ' ' . escapeshellarg($script) . ' >/dev/null 2>&1 &');
         }
-    }    
-    
+    }
+
     public static function tryRunTasks($fileRelatedOnly = false)
     {
         if (Lms_Application::getConfig('incoming', 'force_tasks')) {
@@ -1106,30 +1099,30 @@ class Lms_Application
             }
         }
     }
-    
+
     public static  function pathToLocalizedVideo($url)
     {
         $videoFolder = rtrim(dirname(APP_ROOT)) . '/media/trailers/video';
         $ext = pathinfo($url, PATHINFO_EXTENSION);
         $hash = md5($url);
-        
+
         $path = $videoFolder . "/" . implode("/", str_split(substr($hash, 0, 2))) . "/" . "$hash.{$ext}";
         return $path;
     }
-    
+
     public static function urlToLocalizedVideo($url)
     {
         $path = self::pathToLocalizedVideo($url);
         $localUrl = self::$_rootUrl . str_replace(dirname(APP_ROOT), '', $path);
         return $localUrl;
     }
-    
+
     public static function isBynet()
     {
         //return false;
         if (isset($_SERVER['HTTP_USER_AGENT'])) {
             $ua = $_SERVER['HTTP_USER_AGENT'];
-            if (stripos($ua, "Googlebot") 
+            if (stripos($ua, "Googlebot")
                 || preg_match('{Yandex}i', $ua)
                 || preg_match('{facebook}i', $ua)
                 || stripos($ua, "StackRambler")
@@ -1150,7 +1143,7 @@ class Lms_Application
             return true;
         }
         return in_array($country, array("BY", "US", "KZ", "IL", "UZ", "LV", "CA", "KG", "EE", "LT", "MD", "BR", "DE"));
-        
+
         /*foreach (self::getConfig('bynets') as $net) {
             if (Lms_Ip::ipInNet(Lms_Ip::getIp(), $net)) {
                 return true;
@@ -1170,7 +1163,7 @@ class Lms_Application
         }
         return $regions;
     }
-    
+
     public static function getCountryCode($cache = true)
     {
         static $code = null;
@@ -1184,43 +1177,43 @@ class Lms_Application
         }
         return $code;
     }
-    
+
     public static function dateOfWeek($dayNum)
     {
         $currentTvTime = strtotime("-5 hours");
         $currentDay = date('N', $currentTvTime);
         $diff = $currentDay - $dayNum;
-        
+
         $date = new DateTime();
         $date->setTimestamp($currentTvTime - $diff*3600*24);
         return $date;
     }
-    
+
     public static function dateIsToday($date)
     {
         $currentTvTime = strtotime("-5 hours");
         $currentDate = date('Y-m-d', $currentTvTime);
         return $currentDate == $date->format('Y-m-d');
     }
-    
+
     public static function isToday($dayNum)
     {
         $currentTvTime = strtotime("-5 hours");
         $currentDay = date('N', $currentTvTime);
         return $currentDay == $dayNum;
     }
-        
+
     public static function isSameDate(DateTime $date1, DateTime $date2)
     {
         return $date1->format('Y-m-d') == $date2->format('Y-m-d');
     }
-    
+
     public static function getMainDomain()
     {
         return str_replace('api.', '', $_SERVER['HTTP_HOST']);
     }
-    
-    public static function getCategoryIdByLabel($category) 
+
+    public static function getCategoryIdByLabel($category)
     {
          switch ($category) {
             case 'series':
@@ -1239,12 +1232,12 @@ class Lms_Application
         }
         return $categoryId;
     }
-    
+
     public static function getCategoryLabelById($categoryId)
     {
         return Lms_Application::getConfig('categories', 'labels', $categoryId);
     }
-    
+
     public static function timeToInterval($time)
     {
         $interval = preg_replace('{(\d+):(\d+):(\d+)}', 'PT$1H$2M$3S', $time);
@@ -1259,7 +1252,7 @@ class Lms_Application
         }
         return $seconds;
     }
-    
+
     public static function setDefaultDevice($device)
     {
         self::$_defaultDevice = $device;
@@ -1278,7 +1271,7 @@ class Lms_Application
         }
         return self::$_device;
     }
-    
+
     public static function normalizeDevice($value, $default = 'api')
     {
         $value = strtolower($value);
@@ -1301,12 +1294,12 @@ class Lms_Application
         }
         return $uuid;
     }
-    
+
     public static function isAppleStaff()
     {
         return (Lms_Application::getCountryCode()=='US' && Lms_Application::getDevice()=='ios');
     }
-    
+
     public static function isUnetUser()
     {
         static $result = null;
@@ -1326,7 +1319,7 @@ class Lms_Application
         }
         return $result;
     }
-    
+
     public static function authUnetUser()
     {
         $ip = Lms_Ip::getIp();
@@ -1337,7 +1330,7 @@ class Lms_Application
             $user->setAuthToken();
         }
     }
-    
+
     public static function isDrmFree()
     {
         static $result = null;
@@ -1360,7 +1353,7 @@ class Lms_Application
         }
         return $result;
     }
-    
+
     public static function getNearestLocation($cache = true)
     {
         static $location = null;
@@ -1392,17 +1385,17 @@ class Lms_Application
         }
         return $location;
     }
-    
+
     public static function ucfirst($text)
     {
         return Lms_Text::uppercase(Lms_Text::substring($text, 0, 1)) . Lms_Text::substring($text, 1);
     }
-    
+
     public static function isPersikTv()
     {
         return self::getConfig('is_persik_tv');
     }
-    
+
 
     public static function getCurrency($default = null)
     {
@@ -1410,8 +1403,8 @@ class Lms_Application
             $default = self::getConfig('currencies', 'default');
         }
         if (self::$_currency===null) {
-            $currency = null; 
-            
+            $currency = null;
+
             if (!empty($_COOKIE['currency'])) {
                 $currency = $_COOKIE['currency'];
             }
@@ -1422,7 +1415,7 @@ class Lms_Application
         }
         return self::$_currency;
     }
-   
+
     public static function normalizeCurrency($value, $default = 'byn')
     {
         $value = strtolower($value);
@@ -1433,7 +1426,7 @@ class Lms_Application
             return $value;
         }
     }
-    
+
     public static function getCurrencyRate()
     {
         $rate = 1;
@@ -1458,8 +1451,8 @@ class Lms_Application
     {
         return self::getConfig('pay_sys_support', $paySys, self::getCurrency());
     }
-    
-    public static function isVodOnly() 
+
+    public static function isVodOnly()
     {
         return self::getConfig('vod_only');
     }
@@ -1471,7 +1464,7 @@ class Lms_Application
         }
 
         $device = Lms_Application::getDevice();
-        
+
         $bookmarks = array();
         $sortarray = array();
         if (!Lms_Application::isVodOnly()) {
@@ -1482,7 +1475,7 @@ class Lms_Application
                     $bookmarks[] = $channel;
                 }
             }
-            
+
             foreach (Lms_Item_BookmarkTvshow::selectMy(Lms_Application::getRegionIds(), Lms_Application::getDevice()) as $bookmarkTvshow) {
                 $sortarray[] = $bookmarkTvshow->getAddedAt();
                 $bookmarks[] = $bookmarkTvshow->getTvshow();
@@ -1496,15 +1489,15 @@ class Lms_Application
         array_multisort($sortarray, SORT_DESC, $bookmarks);
 
         return $bookmarks;
-    }    
-    
-    
+    }
+
+
     public static function getMailFrom()
     {
         if (!isset($_SERVER['HTTP_HOST'])) {
             return self::getConfig('mail', 'from_email_by');
         }
-        
+
         if (preg_match('{persik\.by}', $_SERVER['HTTP_HOST'])
             && !preg_match('{api\.}', $_SERVER['HTTP_HOST'])
         ) {
@@ -1513,7 +1506,7 @@ class Lms_Application
             return self::getConfig('mail', 'from_email');
         }
     }
-    
+
     public static function getFrontController()
     {
         return self::$_frontController;

@@ -9,7 +9,7 @@ class Lms_Football
         'Бразилия' => ['name_ru' => 'Бразилия', 'name_en' => 'Brazil', 'img' => '/images/flags/brazil.svg', 'code' => 'brazil'],
         'Швейцария' => ['name_ru' => 'Швейцария', 'name_en' => 'switzerland', 'img' => '/images/flags/switzerland.svg', 'code' => 'switzerland'],
         'Швеция' => ['name_ru' => 'Швеция', 'name_en' => 'Sweden', 'img' => '/images/flags/sweden.svg', 'code' => 'sweden'],
-        'Южная Корея' => ['name_ru' => 'Южная корея', 'name_en' => 'South Korea', 'img' => '/images/flags/south-korea.svg', 'code' => 'southkorea'],
+        'Южная Корея' => ['name_ru' => 'Южная Корея', 'name_en' => 'South Korea', 'img' => '/images/flags/south-korea.svg', 'code' => 'southkorea'],
         'Бельгия' => ['name_ru' => 'Бельгия', 'name_en' => 'Belgium', 'img' => '/images/flags/belgium.svg', 'code' => 'belgium'],
         'Панама' => ['name_ru' => 'Панама', 'name_en' => 'Panama', 'img' => '/images/flags/panama.svg', 'code' => 'panama'],
         'Тунис' => ['name_ru' => 'Тунис', 'name_en' => 'Tunisia', 'img' => '/images/flags/tunisia.svg', 'code' => 'tunisia'],
@@ -22,7 +22,7 @@ class Lms_Football
         'Португалия' => ['name_ru' => 'Португалия', 'name_en' => 'Portugal', 'img' => '/images/flags/portugal.svg', 'code' => 'portugal'],
         'Марокко' => ['name_ru' => 'Марокко', 'name_en' => 'Morocco', 'img' => '/images/flags/morocco.svg', 'code' => 'morocco'],
         'Уругвай' => ['name_ru' => 'Уругвай', 'name_en' => 'Uruguay', 'img' => '/images/flags/uruguay.svg', 'code' => 'uruguay'],
-        'Саудовская Аравия' => ['name_ru' => 'Саудовская аравия', 'name_en' => 'Saudi Arabia', 'img' => '/images/flags/saudi-arabia.svg', 'code' => 'saudiarabia'],
+        'Саудовская Аравия' => ['name_ru' => 'Саудовская Аравия', 'name_en' => 'Saudi Arabia', 'img' => '/images/flags/saudi-arabia.svg', 'code' => 'saudiarabia'],
         'Иран' => ['name_ru' => 'Иран', 'name_en' => 'Iran', 'img' => '/images/flags/iran.svg', 'code' => 'iran'],
         'Испания' => ['name_ru' => 'Испания', 'name_en' => 'Spain', 'img' => '/images/flags/spain.svg', 'code' => 'spain'],
         'Дания' => ['name_ru' => 'Дания', 'name_en' => 'Denmark', 'img' => '/images/flags/denmark.svg', 'code' => 'denmark'],
@@ -32,7 +32,7 @@ class Lms_Football
         'Аргентина' => ['name_ru' => 'Аргентина', 'name_en' => 'Argentina', 'img' => '/images/flags/argentina.svg', 'code' => 'argentina'],
         'Хорватия' => ['name_ru' => 'Хорватия', 'name_en' => 'Croatia', 'img' => '/images/flags/croatia.svg', 'code' => 'croatia'],
 //        'Коста-Рика' => ['name_ru' => 'Коста-рика', 'name_en' => 'Costa-Rica', 'img' => '/images/flags/costa-rica.svg', 'code' => 'costarica'],
-        'Коста' => ['name_ru' => 'Коста-рика', 'name_en' => 'Costa-Rica', 'img' => '/images/flags/costa-rica.svg', 'code' => 'costarica'],
+        'Коста' => ['name_ru' => 'Коста-Рика', 'name_en' => 'Costa-Rica', 'img' => '/images/flags/costa-rica.svg', 'code' => 'costarica'],
         'Нигерия' => ['name_ru' => 'Нигерия', 'name_en' => 'Nigeria', 'img' => '/images/flags/nigeria.svg', 'code' => 'nigeria'],
         'Исландия' => ['name_ru' => 'Исландия', 'name_en' => 'Iceland', 'img' => '/images/flags/iceland.svg', 'code' => 'iceland'],
         'Сербия' => ['name_ru' => 'Сербия', 'name_en' => 'Serbia', 'img' => '/images/flags/serbia.svg', 'code' => 'serbia'],
@@ -80,7 +80,7 @@ class Lms_Football
                     t2.channel_id IN (10298, 10300)
                     AND t2.start < ?
                     AND t1.name LIKE '%Футбол. Чемпионат мира-2018.%'
-                    ORDER BY t2.date", date('Y-m-d H:i:s')
+                    ORDER BY t2.date desc", date('Y-m-d H:i:s')
         );
 
         foreach ($items as $k => $item)
@@ -104,8 +104,9 @@ class Lms_Football
                     AND NOW() > t2.start
                     AND NOW() < t2.stop
                     AND t1.name LIKE '%Футбол. Чемпионат мира-2018.%'
-                    ORDER BY t2.date"
+                     ORDER BY t2.date"
         );
+
         foreach ($items as $k => $item)
             $items[$k] = self::titleParse($item);
 

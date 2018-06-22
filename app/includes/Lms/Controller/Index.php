@@ -63,18 +63,23 @@ class Lms_Controller_Index extends Zend_Controller_Action
             $this->view->user = Lms_User::getUser();
             if (!$this->view->user->getId())
                 if ($this->view->item['is_now'] or $this->view->item['is_archive'])
-                    $this->_redirect('/login/');
-
+                    {
+                      setcookie('need_auth_backurl', $this->getRequest()->getRequestUri(), strtotime('+7 days'), '/');
+                      $this->_redirect('/login/');
+                    }
+// echo '<pre>';print_r($this->view->item);
 
             // todo - remove (tmp.auth)
-            Lms_User::setUser(331352);
+            // Lms_User::setUser(331352);
+            // var_dump(Lms_User::getUser()->getId());
 
 
 //            $this->view->stream_url = 'http://by.persik.by:82/live/Ch81/playlist.m3u8?securehash=ThU_HVuuInhaaitiKsNyT7bndj0dfYLI3ZI2dW1evnQ%3D&secureendtime=1529417967&securestarttime=1529331567&secureuserid=331352&securestreams=5&UserID=331352&device_code=web&r=%7B%22type%22%3A%22channel%22%2C%22id%22%3A%22932%22%7D';
 //            $this->view->stream_url = 'http://ertk0.persik.tv:82/live/Ch68/playlist.m3u8?securehash=gv7Qz8wcNSeiWD_f-wAWrYu75zwh3faH_QH07Ef14II%3D&secureendtime=1529418173&securestarttime=1529331773&secureuserid=331352&securestreams=5&UserID=331352&device_code=web&r=%7B%22type%22%3A%22channel%22%2C%22id%22%3A%2214%22%7D';
 //            $this->view->stream_url = 'http://foreign-free.persik.tv:82/live/Ch64/playlist.m3u8?securehash=Cy2w6LJiu1KceWK_Ub_QsAUjvKw2vMcTxgJ3UxTNsGc%3D&secureendtime=1529453879&securestarttime=1529367479&secureuserid=331352&securestreams=5&UserID=331352&device_code=api&r=%7B%22type%22%3A%22channel%22%2C%22id%22%3A%2210298%22%7D"';
-//            var_dump($this->view->stream_url);
             $this->view->stream_url = Lms_Football::getStreamUrl($this->view->item);
+            // echo $this->view->stream_url;
+
 
 
             // todo parser "match-info"
@@ -88,6 +93,7 @@ class Lms_Controller_Index extends Zend_Controller_Action
     public function setkaAction()
     {
         $this->view->title = "Турниная сетка Чемпионата мира по футболу 2018";
+
     }
 
     public function raspisanieAction()
@@ -113,18 +119,95 @@ class Lms_Controller_Index extends Zend_Controller_Action
                 $user = Lms_Item_User::getByEmail($email);
                 if ($user) {
                     Lms_User::setUser($user);
-                    var_dump($user->getId());
                     $user->setAuthToken();
-                    die('logged');
+
+                    $sourceHost = $user->getSourceHost();
+                    $sourceHost.= ($sourceHost?',':'') . 'russia2018';
+                    $user->setSourceHost($sourceHost)->save();
+
+                    $redirectUrl = $_COOKIE['need_auth_backurl']?:'/';
+                    setcookie('need_auth_backurl', '', -1);
+                    $this->_redirect($redirectUrl);
                 }
                 else {
-                    $this->_helper->viewRenderer->setRender('login-complete');
-                    $user = Lms_Item_User::Register($email, 'fifa2018', false);
+                    $this->view->subject = '%F0%9F%8D%91 Подтверждение регистрации на russia2018.persik.tv';
+
+                    if ($user = Lms_Item_User::Register($email, 'fifa2018', false))
+                    {
+                      $db = Lms_Db::get('main');
+                      $db->query("update users set source_host = 'russia2018' where user_id = ?d", $user->getId());
+
+                      $this->_redirect('/registrationsuccess/');
+
+                    }
                 }
 
             }
         }
+    }
 
+    public function registrationsuccessAction()
+    {
+      
+    }
+
+    public function mailerAction()
+    {
+      $transport = Lms_Application::getConfig('mail', 'transport', 'do_not_reply@persik.by');
+      // var_dump($transport);
+
+      $db = Lms_Db::get('main');
+
+      $rows = $db->select('SELECT * FROM mails WHERE tries<10 ORDER BY tries LIMIT 20');
+      // echo '<pre>';print_r($rows);exit;
+
+      foreach ($rows as $row) {
+          $failed = false;
+          try {
+              if (trim($row['to_email'])) {
+                  Lms_Debug::debug(sprintf('Sending email #%d to %s about "%s"', (int)$row['mail_id'], $row['to_email'], $row['subject']));
+                  $mail = new Zend_Mail('UTF-8');
+                  if ($row['body_text']) {
+                      $mail->setBodyText($row['body_text']);
+                  }
+                  if ($row['body_html']) {
+                      $mail->setBodyHtml($row['body_html']);
+                  }
+                  $mail->setSubject(rawurldecode($row['subject']))
+                       ->setFrom($row['from_email'], $row['from_name'])
+                       ->addTo($row['to_email'], $row['to_name'])
+                       ->send(Lms_Application::getConfig('mail', 'transport', $row['from_email']));
+                  Lms_Debug::debug(sprintf("Sending email #%d done", (int)$row['mail_id']));
+                  echo sprintf("Sending email #%d done", (int)$row['mail_id']);
+              }
+          } catch (Exception $e) {
+              $failed = true;
+              Lms_Debug::debug($e->getMessage());
+              var_dump($e->getMessage());exit;
+          }
+
+          if ($failed) {
+              $db->query('UPDATE ?_mails SET `tries`=`tries`+1 WHERE mail_id=?d', $row['mail_id']);
+          } else {
+
+              $db->query('DELETE FROM ?_mails WHERE mail_id=?d', $row['mail_id']);
+          }
+      }
+    }
+
+    public function devAction()
+    {
+      $user = Lms_User::getUser();
+      // echo $user->getSourceHost();
+      echo $user->getEmail();
+      // exit;
+      $source_host = $user->getSourceHost();
+      $source_host.= ($source_host?',':'') . 'russia2018';
+      echo $source_host;//exit;
+      $res = $user->setSourceHost($source_host)->save();
+      // $db = Lms_Db::get('main');
+      // $res = $db->query("update users set source_host = ? where user_id = ?d", $source_host, $user->getId());
+      var_dump($res);exit;
     }
 
 

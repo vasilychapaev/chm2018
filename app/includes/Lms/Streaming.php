@@ -3,7 +3,7 @@
 class Lms_Streaming {
 
     public static function getSecureUrlParams($mediapath, $userId, $streams = 0, $lifeTimeSeconds = 86400) {
-        
+
         $starttime = time();
         $endtime = $starttime + $lifeTimeSeconds;
         $wowzaParams = array(
@@ -16,11 +16,11 @@ class Lms_Streaming {
             $wowzaParams[] = 'securestreams=' . $streams;
         }
         sort($wowzaParams);
-        $stringToHash = $mediapath . '?' . implode('&', $wowzaParams); 
+        $stringToHash = $mediapath . '?' . implode('&', $wowzaParams);
         $secureHash = base64_encode(hash('sha256', $stringToHash, true));
         $secureHash = str_replace(array('+', '/'), array('-', '_'), $secureHash);
 
-        
+
         $url = sprintf(
             "securehash=%s&secureendtime=%d&securestarttime=%d&secureuserid=%s",
             rawurlencode($secureHash),
@@ -31,9 +31,9 @@ class Lms_Streaming {
         if (!empty($streams)) {
             $url .= '&securestreams=' . $streams;
         }
-        
+
         return $url;
-    }    
+    }
 
     public static function addSecureHash($url, $userId, $concurrentStreams) {
 
@@ -87,46 +87,46 @@ class Lms_Streaming {
         if (preg_match('{^\w+://}', $mediapath)) {
             return self::processUrl($mediapath, $user, $userId, $concurrentStreams, $device, $resource);
         }
-        
+
         $mediapath = trim($mediapath, '/');
-        
+
         $streamUrl = $mediapath . "/playlist.m3u8";
-        
+
         $streamUrl .= '?' . self::getSecureUrlParams($mediapath, $userId, $concurrentStreams);
-                
+
         $streamUrl .= '&UserID=' . $userId;
         if ($device) {
             $streamUrl .= '&device_code=' . $device;
         }
-        
-        $net = Lms_Application::getNearestLocation();
-        if (in_array($net, ['foreign'])) {
-            $net .= '-' . ($channel->getFree()? 'free' : 'default');
-        } else if (in_array($net, ['s-unet'])) {
-            $net = $net;//#PER-1256
-        } else {
-            if ($paidUser) {
-                $freeNet = 'free';
-            } else {
-                $freeNet = 'free2';
-            }
-            if (preg_match('{btc}', $net)) {
-                if ($paidUser) {
-                    $net = 'btc1';
-                } else {
-                    $net = 'btc2';
-                }
-            }
-            $net = $channel->getFree()? $freeNet : $net;
-        }
+
+        // $net = Lms_Application::getNearestLocation();
+        // if (in_array($net, ['foreign'])) {
+        //     $net .= '-' . ($channel->getFree()? 'free' : 'default');
+        // } else if (in_array($net, ['s-unet'])) {
+        //     $net = $net;//#PER-1256
+        // } else {
+        //     if ($paidUser) {
+        //         $freeNet = 'free';
+        //     } else {
+        //         $freeNet = 'free2';
+        //     }
+        //     if (preg_match('{btc}', $net)) {
+        //         if ($paidUser) {
+        //             $net = 'btc1';
+        //         } else {
+        //             $net = 'btc2';
+        //         }
+        //     }
+        //     $net = $channel->getFree()? $freeNet : $net;
+        // }
         $streamUrl .= "&r=" . urlencode(Zend_Json::encode($resource));
 
-        $streamUrl = "http://$net.persik.tv:82/" . $streamUrl;
-        
+        $streamUrl = "https://free.persik.tv/" . $streamUrl;
+
         if (!$channel->getFree()) {
             $streamUrl = str_replace("persik.tv", "persik.by", $streamUrl);
         }
-        
+
         return $streamUrl;
     }
 
@@ -174,20 +174,20 @@ class Lms_Streaming {
         }
 
         $mediapath = trim($mediapath, '/');
-        
+
         if ($bitrate) {
             $mediapath = $mediapath . '_' . $bitrate;
         }
-        
+
         $streamUrl = $mediapath . "/playlist.m3u8";
-        
-        
+
+
 
         $streamUrl .= '?' . self::getSecureUrlParams($mediapath, $userId,  $concurrentStreams);
-                
+
         $streamUrl .= "&UserID=$userId";
         $streamUrl .= "&device_code=$device";
-        
+
         $net = Lms_Application::getNearestLocation();
         if (in_array($net, ['foreign'])) {
             $net .= '-' . ($channel->getFree() ? 'free' : 'default');
@@ -205,7 +205,7 @@ class Lms_Streaming {
 
 
         $streamUrl = "http://$net.persik.tv:82/" . $streamUrl;
-        
+
         if (!$channel->getFree()) {
             $streamUrl = str_replace("persik.tv", "persik.by", $streamUrl);
         }
@@ -227,13 +227,13 @@ class Lms_Streaming {
         if (!$channel->getFree() && !$user->getId() && !Lms_Application::isDrmFree()) {
             return false;
         }
-        
+
         $userId = $user->getId()?: self::getRandomUserId();
         $channelUrl = $channel->getDvrUrl()?: $channel->getStreamUrl();
         if (preg_match('{^/dvr}', $channelUrl)) {
             $startTime = strtotime($tvshow->getStart());
             $duration = $tvshow->getDuration();
-            $streamUrl = preg_replace('{^/dvr/}i', 'http://dvr.persik.by:82/dvr/', $channelUrl);
+            $streamUrl = preg_replace('{^/dvr/}i', 'https://dvr.persik.by/dvr/', $channelUrl);
             $streamUrl .= sprintf('/dvr.m3u8?s=%s&d=%s&UserID=%s',
                 $startTime,
                 $duration,
@@ -310,7 +310,7 @@ class Lms_Streaming {
 
 
         $net = 'vod';
-        $streamUrl = "http://$net.persik.by/" . $streamUrl;
+        $streamUrl = "https://$net.persik.by/" . $streamUrl;
 
         return $streamUrl;
     }
@@ -356,5 +356,5 @@ class Lms_Streaming {
         $ip = Lms_Ip::getIp();
         return 'ip-' . $ip;
         return 'r' . rand(100000000, 999999999);
-    }    
+    }
 }
