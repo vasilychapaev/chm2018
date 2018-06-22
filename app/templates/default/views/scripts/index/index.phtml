@@ -4,7 +4,7 @@
 
             <?php if ($this->itemsNow):
                 foreach ($this->itemsNow as $item): ?>
-                <div class="col-md-4">
+                <div class="col-sm-4">
                     <a href="<?php echo $item['url']?>"><img src="<?php echo $item['thumb']?>" alt=""></a>
                     <span><a href="<?php echo $item['url']?>"><?php echo $item['cmd1']['name_ru']?> - <?php echo $item['cmd2']['name_ru']?>, <?php echo $item['date_ru']?></a></span>
                 </div>
@@ -30,7 +30,7 @@
         <div class="row">
 
             <?php foreach ($this->itemsFuture as $item): ?>
-            <div class="col-md-4">
+            <div class="col-sm-4">
                 <a href="<?php echo $item['url']?>"><img src="<?php echo $item['thumb']?>" alt=""></a>
                 <span><a href="<?php echo $item['url']?>"><?php echo $item['cmd1']['name_ru']?> - <?php echo $item['cmd2']['name_ru']?>, <?php echo $item['datetime_ru']?></a></span>
             </div>
@@ -58,7 +58,7 @@
         <div class="row">
 
             <?php foreach ($this->itemsArchive as $item):?>
-                <div class="col-md-4">
+                <div class="col-sm-4">
                     <a href="<?php echo $item['url']?>"><img src="<?php echo $item['thumb']?>" alt=""></a>
                     <span><a href="<?php echo $item['url']?>"><?php echo $item['cmd1']['name_ru']?> - <?php echo $item['cmd2']['name_ru']?>, <?php echo $item['datetime_ru']?></a></span>
                 </div>
