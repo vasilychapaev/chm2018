@@ -88,4 +88,8 @@
   .navbar-form {
     .wrapper div {margin-top: 0}
   }
+  .navbar-form .wrapper div button {
+    display: inline-block;
+    img {margin-top:0}
+  }
 }
