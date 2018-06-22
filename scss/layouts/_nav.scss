@@ -88,8 +88,11 @@
   .navbar-form {
     .wrapper div {margin-top: 0}
   }
-  .navbar-form .wrapper div button {
-    padding:0;
-    img {margin-top:0}
+  .navbar-form .wrapper div {
+    button {
+      padding:0;
+      img {margin-top:0}
+    }
+    input {width: 206px}
   }
 }
