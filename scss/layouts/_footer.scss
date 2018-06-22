@@ -1,5 +1,7 @@
 /* Footer */
 
+.footer-spacer {height: 250px}
+
 footer {
   margin-top: 50px;
   height: 200px;
@@ -8,6 +10,10 @@ footer {
   background: url(/images/grass-bg3_.jpg) repeat-x top left;
   background-size: auto 200px;
   padding-top: 75px;
+
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 
   .logo-persik {
     text-align: right;
