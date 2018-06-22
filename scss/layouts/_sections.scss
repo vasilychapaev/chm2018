@@ -72,6 +72,7 @@
   .gazon {
     background: url(/images/grass-big-bg_low.jpg) repeat-x bottom left;
     background-size: 100%;
+    @media(max-width: 1024px) {background-size: cover;}
     min-height: 200px;
 
     padding: 50px 0;
@@ -87,10 +88,12 @@
 
     .when, .stage, .where {
       font-size: 20px;
+      @media(max-width: 767px) {font-size:15px}
     }
 
     .player-wrapper {
       margin: 50px auto;
+      @media(max-width: 767px) {margin:10px auto}
       text-align: center;
 
       #player {
@@ -121,16 +124,20 @@
         font-weight: bold;
       }
     }
-    .sostav-left {
-      text-align: right;
+    .sostav-left {text-align: right}
+    @media(max-width: 767px) {
+      .sostav-left, .sostav-right {text-align: center}
     }
+
 
   }
 
   .facts {
-    .facts-left {
-      text-align: right;
+    .facts-left {text-align: right}
+    @media(max-width: 767px) {
+      .facts-left, .facts-right {text-align: center}
     }
+
   }
 
 

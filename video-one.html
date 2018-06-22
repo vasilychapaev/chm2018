@@ -27,9 +27,9 @@
             <a class="navbar-brand" href="/"><img src="/images/logo.png" alt=""></a>
         </div>
 
-        <div class="collapse navbar-collapse">
+        <div class="collapse navbar-collapse" id="navbar">
 
-            <ul class="nav navbar-nav pull-right">
+            <ul class="nav navbar-nav">
                 <li><a href="/setka.html">Турнирная сетка</a></li>
                 <li><a href="/raspisanie.html">Расписание матчей</a></li>
             </ul>
@@ -106,7 +106,7 @@
                 <h2>Составы команд на игру</h2>
                 <div class="row">
 
-                    <div class="col-md-6 sostav-left">
+                    <div class="col-sm-6 sostav-left">
                         <img src="/images/flags/russia.svg" alt="">
                         <ul>
                             <li>Главный тренер</li>
@@ -146,7 +146,7 @@
                         <div class="clearfix"></div>
 
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-sm-6 sostav-right">
                         <img src="/images/flags/uruguay.svg" alt="">
                         <ul>
                             <li>Главный тренер</li>
@@ -199,7 +199,7 @@
 
 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-sm-6">
                         <p class="facts-left">
                             Стоимость основного состава: €452 млн<br>
                             Место в рейтинге FIFA: 8-е<br>
@@ -210,8 +210,8 @@
                             Самый дорогой игрок: Серхио Бускетс (полузащитник, €60 млн)<br>
                         </p>
                     </div>
-                    <div class="col-md-6">
-                        <p>
+                    <div class="col-sm-6">
+                        <p class="facts-right">
                             Стоимость основного состава: €452 млн<br>
                             Место в рейтинге FIFA: 8-е<br>
                             Зона: UEFA<br>
@@ -233,14 +233,12 @@
 <footer>
     <div class="container">
         <div class="row">
-            <div class="col-md-4 logo-persik">
-                <img src="/images/logo_persik.png" alt="">
+            <div class="col-xs-6 col-sm-8 txt">
+                <img src="/images/logo_persik.png" alt="" class="logo-persik ">
+                <img src="/images/icon-letter.png" alt="" class="icon-contacts"> info@persik.tv
             </div>
-            <div class="col-md-4 contacts">
-                <img src="/images/icon-letter.png" alt=""> info@persik.tv
-            </div>
-            <div class="col-md-2 logo-volk">
-                <img src="/images/volk165.png" alt="">
+            <div class="col-xs-6 col-sm-4 logo-volk">
+                <img src="/images/volk.png" alt="">
             </div>
         </div>
     </div>
@@ -253,12 +251,20 @@
 
 <script>
     $(document).ready(function () {
+        var wplayer = $('.player-wrapper').width();
+        var w = 600;
+        var h = 300;
+        if (wplayer < 600) {
+            w = wplayer;
+            h = Math.round(wplayer/2);
+        }
+
         var player = new Clappr.Player({
             parentId: "#player",
 //            source: "/video/futbik11.mp4",
             source: "https://bamper.by/upload/futbik11.mp4",
-            width: 600,
-            height: 300,
+            width: w,
+            height: h,
 //            autoPlay: true
             autoPlay: true
         });

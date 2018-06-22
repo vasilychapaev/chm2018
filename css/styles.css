@@ -177,6 +177,9 @@ h2 {
   padding: 50px 0;
   text-align: center !important;
   color: #ffffff; }
+  @media (max-width: 1024px) {
+    .section-match .gazon {
+      background-size: cover; } }
   .section-match .gazon h1 img {
     width: 50px;
     height: 50px;
@@ -185,9 +188,15 @@ h2 {
     border-radius: 50%; }
   .section-match .gazon .when, .section-match .gazon .stage, .section-match .gazon .where {
     font-size: 20px; }
+    @media (max-width: 767px) {
+      .section-match .gazon .when, .section-match .gazon .stage, .section-match .gazon .where {
+        font-size: 15px; } }
   .section-match .gazon .player-wrapper {
     margin: 50px auto;
     text-align: center; }
+    @media (max-width: 767px) {
+      .section-match .gazon .player-wrapper {
+        margin: 10px auto; } }
     .section-match .gazon .player-wrapper #player {
       width: 600px;
       margin: 0 auto; }
@@ -204,8 +213,14 @@ h2 {
     font-weight: bold; }
 .section-match .sostav .sostav-left {
   text-align: right; }
+@media (max-width: 767px) {
+  .section-match .sostav .sostav-left, .section-match .sostav .sostav-right {
+    text-align: center; } }
 .section-match .facts .facts-left {
   text-align: right; }
+@media (max-width: 767px) {
+  .section-match .facts .facts-left, .section-match .facts .facts-right {
+    text-align: center; } }
 
 .section-login {
   text-align: center; }
