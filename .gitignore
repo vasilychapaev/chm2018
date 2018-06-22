@@ -6,3 +6,4 @@
 /app/includes/Lms/Item/Struct/
 /app/config.php
 /app/local.settings.php
+/app/logs/*.log
