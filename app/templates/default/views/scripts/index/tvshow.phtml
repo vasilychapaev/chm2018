@@ -1,0 +1,46 @@
+<div class="section section-match">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="gazon">
+                    <h1><?php echo $this->item['title']?></h1>
+                    <br>
+                    <div class="when"><?php echo $this->item['datetime_ru']?></div>
+
+                    <div class="player-wrapper">
+                        <?php if ($this->item['is_now'] or $this->item['is_archive']): ?>
+
+                            <div id="player"></div>
+
+                            <script src="/js/clappr.min.js"></script>
+
+                            <script>
+                                $(document).ready(function () {
+                                    var wplayer = $('.player-wrapper').width();
+                                    var w = (wplayer < 600) ? wplayer : 600;
+                                    var h = Math.round(w/1.77);
+
+                                    var player = new Clappr.Player({
+                                        parentId: "#player",
+                                        source: "<?php echo $this->stream_url?>",
+                                        width: w,
+                                        height: h,
+                                        autoPlay: true
+                                    });
+                                    Clappr.Log.setLevel(0);
+                                });
+                            </script>
+
+                        <?php endif ?>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+    </div>
+</div>

@@ -57,7 +57,7 @@ class Lms_Football
                     WHERE
                     t2.channel_id IN (10298, 10300)
                     AND NOW() < t2.start 
-                    AND t1.name LIKE '%Футбол. Чемпионат мира-2018%'
+                    AND (t1.name LIKE '%Футбол. Чемпионат мира-2018%' OR t1.name = 'Футбол. Дневник чемпионата мира')
                     ORDER BY t2.start"
         );
 
@@ -79,7 +79,8 @@ class Lms_Football
                     WHERE
                     t2.channel_id IN (10298, 10300)
                     AND NOW() > t2.start
-                    AND t1.name LIKE '%Футбол. Чемпионат мира-2018.%'
+                    AND t2.start > DATE_SUB(NOW(), INTERVAL 5 day)
+                    AND (t1.name LIKE '%Футбол. Чемпионат мира-2018%' OR t1.name = 'Футбол. Дневник чемпионата мира')
                     ORDER BY t2.date desc"
         );
 
@@ -103,7 +104,7 @@ class Lms_Football
                     t2.channel_id IN (10298, 10300)
                     AND NOW() > t2.start
                     AND NOW() < t2.stop
-                    AND t1.name LIKE '%Футбол. Чемпионат мира-2018.%'
+                    AND (t1.name LIKE '%Футбол. Чемпионат мира-2018%' OR t1.name = 'Футбол. Дневник чемпионата мира')
                      ORDER BY t2.date"
         );
 
@@ -113,7 +114,7 @@ class Lms_Football
         return $items;
     }
 
-    static public function getMatchInfo($tvshowId)
+    static public function getTvshowInfo($tvshowId)
     {
         $db = Lms_Db::get('main');
 
@@ -146,9 +147,8 @@ class Lms_Football
             $stream_url = Lms_Streaming::getDvrStreamUrl($channel, $tvshow, null, Lms_Application::getDevice());
         }
 
-        return $stream_url?:false;
+        return $stream_url ?: false;
     }
-
 
 
     static public function getTvshowVod($tvshowId)
@@ -166,7 +166,8 @@ class Lms_Football
         return false;
     }
 
-    static function countryGetCode($code) {
+    static function countryGetCode($code)
+    {
         if (empty(self::$countryMapCode)) {
             foreach (self::$countryMap as $country)
                 self::$countryMapCode[$country['code']] = $country;
@@ -179,39 +180,28 @@ class Lms_Football
     }
 
 
-
     /*
      * парсинг строки телепрограммы
      * добавление нужных значений (названия стран, иконки, генерация чпу-урл)
      */
     static function titleParse($item)
     {
-        preg_match('/.+2018\. ([\w\s]+-[\w\s\-]+)($|\..*?)/iuU', $item['name'], $m);
-        if ($m[1]) {
-            $item['cmd12'] = $m[1];
-            list($cmd1, $cmd2) = explode('-', $m['1']);
-            if ($country = self::countryGet($cmd1))
-                $item['cmd1'] = $country;
-            if ($country = self::countryGet($cmd2))
-                $item['cmd2'] = $country;
-            if (isset($item['cmd1']) and isset($item['cmd2']))
-                $item['url'] = sprintf('/match/%s/%s/%s/', $item['cmd1']['code'], $item['cmd2']['code'], $item['tvshow_id']);
-            $parts = explode('.', $item['name']);
-            $item['city'] = trim(array_pop($parts));
+        // даты и обложки
+        setlocale(LC_ALL, 'ru_RU', 'ru_RU.UTF-8', 'ru', 'russian');
+        $ts = strtotime($item['start']);
+        $item['date_ru'] = strftime('%d %B', $ts);
+        $item['datetime_ru'] = strftime('%d %B в %H:%M', $ts);
 
-            $item['thumb'] = '/images/fifa-bg.jpg?2';
-            if ($item['covers'])
-                $item['thumb'] = (strpos($item['covers'], 'http') === false)
-                    ? 'http://persik.tv/'.$item['covers']
-                    : $item['covers'];
+        $item['thumb'] = '/images/fifa-bg.jpg?2';
+        if ($item['covers'])
+            $item['thumb'] = (strpos($item['covers'], 'http') === false)
+                ? 'http://persik.tv/' . $item['covers']
+                : $item['covers'];
 
-            setlocale(LC_ALL, 'ru_RU', 'ru_RU.UTF-8', 'ru', 'russian');
-            $ts = strtotime($item['start']);
-            $item['date_ru'] =  strftime('%d %B', $ts);
-//            $item['datetime_ru'] =  strftime('%d %B %Y, в %H:%M', $ts);
-            $item['datetime_ru'] =  strftime('%d %B в %H:%M', $ts);
-        }
+        $item['title'] = $item['name'];
+        $item['url'] = sprintf('/tvshow/%s/', $item['tvshow_id']);
 
+        // флаги определяю "архив/сейчас/потом"
         $date_now = date('Y-m-d H:i:s');
         $item['is_future']  = ($date_now < $item['start']);
         $item['is_archive'] = ($date_now > $item['stop']);
@@ -219,10 +209,33 @@ class Lms_Football
 
 
 
+        // ищу 2 названия стран через тире - заполню инфу о командах
+        preg_match('/.+2018\. ([\w\s]+-[\w\s\-]+)($|\..*?)/iuU', $item['name'], $m);
+        if ($m[1]) {
+
+            $item['cmd12'] = $m[1];
+            list($cmd1, $cmd2) = explode('-', $m['1']);
+            if ($country = self::countryGet($cmd1))
+                $item['cmd1'] = $country;
+            if ($country = self::countryGet($cmd2))
+                $item['cmd2'] = $country;
+
+            if (isset($item['cmd1']) and isset($item['cmd2'])) { // 1й тип трансляции - есть 2 команды = матч
+
+                $item['title'] = sprintf('%s - %s, %s', $item['cmd1']['name_ru'], $item['cmd2']['name_ru'], $item['datetime_ru']);
+                $item['url'] = sprintf('/match/%s/%s/%s/', $item['cmd1']['code'], $item['cmd2']['code'], $item['tvshow_id']);
+
+                $parts = explode('.', $item['name']);
+                $item['city'] = trim(array_pop($parts));
+            }
+        }
+
+
+
 
         // todo debug - любой канал показать
-        if (!$item['url'])
-            $item['url'] = sprintf('/match/raz/dva/%s/', $item['tvshow_id']);
+//        if (!$item['url'])
+//            $item['url'] = sprintf('/match/raz/dva/%s/', $item['tvshow_id']);
 
         return $item;
     }

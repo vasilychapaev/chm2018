@@ -608,6 +608,16 @@ class Lms_Application
             )
         );
 
+        $router->addRoute(
+            'tvshow',
+            new Zend_Controller_Router_Route('tvshow/:tvshow_id/*',
+                array(
+                    'controller' => 'index',
+                    'action'     => 'tvshow'
+                )
+            )
+        );
+
 
 
         $router->addRoute(

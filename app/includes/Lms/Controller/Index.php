@@ -56,7 +56,7 @@ class Lms_Controller_Index extends Zend_Controller_Action
         if ($item = Lms_Football::countryGetCode($cmd2))
             $this->view->cmd2 = $item;
 
-        if ($this->view->item = Lms_Football::getMatchInfo($tvshowId)) {
+        if ($this->view->item = Lms_Football::getTvshowInfo($tvshowId)) {
             $this->view->title = $this->view->item['name'];
 
             // есть что смотреть - но юзер не авторизован
@@ -89,6 +89,27 @@ class Lms_Controller_Index extends Zend_Controller_Action
 
     }
 
+    public function tvshowAction()
+    {
+        $tvshowId = $this->_getParam('tvshow_id');
+
+        if ($this->view->item = Lms_Football::getTvshowInfo($tvshowId)) {
+            $this->view->title = $this->view->item['name'];
+
+            // есть что смотреть - но юзер не авторизован
+            $this->view->user = Lms_User::getUser();
+            if (!$this->view->user->getId())
+                if ($this->view->item['is_now'] or $this->view->item['is_archive']) {
+                    setcookie('need_auth_backurl', $this->getRequest()->getRequestUri(), strtotime('+7 days'), '/');
+                    $this->_redirect('/login/');
+                }
+
+            $this->view->stream_url = Lms_Football::getStreamUrl($this->view->item);
+
+
+        }
+    }
+
 
     public function setkaAction()
     {
@@ -104,6 +125,7 @@ class Lms_Controller_Index extends Zend_Controller_Action
 
     public function loginAction()
     {
+
         $this->view->title = "Вход на сайт";
 
         if ($this->getRequest()->isPost())
@@ -146,11 +168,19 @@ class Lms_Controller_Index extends Zend_Controller_Action
         }
     }
 
+    /*
+     * заглушка "регистрация завершена"
+     * на отдельной странице - для метрики
+     */
     public function registrationsuccessAction()
     {
       
     }
 
+
+    /*
+     * debug - переотправить почту
+     */
     public function mailerAction()
     {
       $transport = Lms_Application::getConfig('mail', 'transport', 'do_not_reply@persik.by');
@@ -197,18 +227,43 @@ class Lms_Controller_Index extends Zend_Controller_Action
 
     public function devAction()
     {
-      $user = Lms_User::getUser();
-      // echo $user->getSourceHost();
-      echo $user->getEmail();
-      // exit;
-      $source_host = $user->getSourceHost();
-      $source_host.= ($source_host?',':'') . 'russia2018';
-      echo $source_host;//exit;
-      $res = $user->setSourceHost($source_host)->save();
-      // $db = Lms_Db::get('main');
-      // $res = $db->query("update users set source_host = ? where user_id = ?d", $source_host, $user->getId());
-      var_dump($res);exit;
+//      $user = Lms_User::getUser();
+//      // echo $user->getSourceHost();
+//      echo $user->getEmail();
+//      // exit;
+//      $source_host = $user->getSourceHost();
+//      $source_host.= ($source_host?',':'') . 'russia2018';
+//      echo $source_host;//exit;
+//      $res = $user->setSourceHost($source_host)->save();
+//      // $db = Lms_Db::get('main');
+//      // $res = $db->query("update users set source_host = ? where user_id = ?d", $source_host, $user->getId());
+//      var_dump($res);exit;
+
+
+        $res = require_once $_SERVER['DOCUMENT_ROOT'].'/vendor/autoload.php';
+        $url = 'https://www.kommersant.ru/doc/3468629';
+
+//        $ql = QueryList::get($url);
+//
+//        $data = $ql->rules([
+//            'title' => array('h2', 'text'),
+//            'txt'   => array('.tabloid__details', 'text')
+//        ])->query()->getData();
+//
+//
+//        echo '<pre>';print_r($data->all());
+
+        $html = file_get_contents($url);
+        $dom = pQuery::parseStr($html);
+
+        $dom->query('h2');
+
+
+
     }
+
+
+
 
 
 }

@@ -7,3 +7,6 @@
 /app/config.php
 /app/local.settings.php
 /app/logs/*.log
+/vendor/
+/composer.lock
+adminer.php
