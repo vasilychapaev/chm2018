@@ -42,12 +42,37 @@ class Lms_Football
     static public $countryMapCode = [];
 
 
+
+    static public function getTvshowsTpl($where = [])
+    {
+        $db = Lms_Db::get('main');
+        $items = $db->select(
+            "SELECT
+                    t1.name, t1.movie_id, t1.covers, t2.tvshow_id, t2.channel_id, t2.date, t2.start, t2.stop
+                    FROM movies t1
+                    JOIN tvshows t2 USING (movie_id)
+                    WHERE
+                    t2.channel_id IN (10298, 10300)
+                    AND (t1.name LIKE '%Футбол. Чемпионат мира-2018%' or t1.name LIKE '%Футбол. Чемпионат мира%' OR t1.name = 'Футбол. Дневник чемпионата мира')
+                    { AND NOW() < t2.start }
+                    { AND NOW() > t2.start AND t2.start > DATE_SUB(NOW(), INTERVAL 5 day) }
+                    { AND NOW() > t2.start AND NOW() < t2.stop }
+                    ORDER BY t2.start",
+            isset($where['get_future'])?:DBSIMPLE_SKIP,
+            isset($where['get_archive'])?:DBSIMPLE_SKIP,
+            isset($where['get_now'])?:DBSIMPLE_SKIP
+        );
+
+        foreach ($items as $k => $item)
+            $items[$k] = self::titleParse($item);
+
+        return $items;
+    }
+
+
     static public function getTvshowsFuture()
     {
         $db = Lms_Db::get('main');
-//        $items = $db->select("SELECT * FROM tvshows
-//                    WHERE channel_id = '10254' AND start > NOW() AND title LIKE '%Чемпионат мира-2018%'
-//                    ORDER BY date"
 
         $items = $db->select(
             "SELECT
@@ -81,7 +106,7 @@ class Lms_Football
                     AND NOW() > t2.start
                     AND t2.start > DATE_SUB(NOW(), INTERVAL 5 day)
                     AND (t1.name LIKE '%Футбол. Чемпионат мира-2018%' or t1.name LIKE '%Футбол. Чемпионат мира%' OR t1.name = 'Футбол. Дневник чемпионата мира')
-                    ORDER BY t2.date desc"
+                    ORDER BY t2.start desc"
         );
 
         foreach ($items as $k => $item)
@@ -105,6 +130,27 @@ class Lms_Football
                     AND NOW() > t2.start
                     AND NOW() < t2.stop
                     AND (t1.name LIKE '%Футбол. Чемпионат мира-2018%' or t1.name LIKE '%Футбол. Чемпионат мира%' OR t1.name = 'Футбол. Дневник чемпионата мира')
+                    ORDER BY t2.start"
+        );
+
+        foreach ($items as $k => $item)
+            $items[$k] = self::titleParse($item);
+
+        return $items;
+    }
+
+    static public function getTvshowsAll()
+    {
+        $db = Lms_Db::get('main');
+
+        $items = $db->select(
+            "SELECT
+                    t1.name, t1.movie_id, t1.covers, t2.tvshow_id, t2.channel_id, t2.date, t2.start, t2.stop
+                    FROM movies t1
+                    JOIN tvshows t2 USING (movie_id)
+                    WHERE
+                    t2.channel_id IN (10298, 10300)
+                    AND (t1.name LIKE '%Футбол. Чемпионат мира-2018%' or t1.name LIKE '%Футбол. Чемпионат мира%')
                     ORDER BY t2.date"
         );
 
@@ -202,11 +248,13 @@ class Lms_Football
         $item['url'] = sprintf('/tvshow/%s/', $item['tvshow_id']);
 
         // флаги определяю "архив/сейчас/потом"
-        $date_now = date('Y-m-d H:i:s');
-        $item['is_future']  = ($date_now < $item['start']);
-        $item['is_archive'] = ($date_now > $item['stop']);
-        $item['is_now']     = ($date_now > $item['start'] AND $date_now < $item['stop']);
-
+        $dateNow = date('Y-m-d H:i:s');
+        $tsNow = time();
+        $item['is_future']  = ($dateNow < $item['start']);
+        $item['is_archive'] = ($dateNow > $item['stop']);
+        $item['is_archive_old'] = ( (strtotime($item['stop'])+86400*5) < $tsNow );
+        $item['is_now']     = ($dateNow > $item['start'] AND $dateNow < $item['stop']);
+        $item['is_match']   = false;
 
 
         // ищу 2 названия стран через тире - заполню инфу о командах
@@ -224,6 +272,7 @@ class Lms_Football
                 $item['cmd2'] = $country;
 
             if (isset($item['cmd1']) and isset($item['cmd2'])) { // 1й тип трансляции - есть 2 команды = матч
+                $item['is_match'] = true;
 
                 $item['title'] = sprintf('%s - %s, %s', $item['cmd1']['name_ru'], $item['cmd2']['name_ru'], $item['datetime_ru']);
                 $item['url'] = sprintf('/match/%s/%s/%s/', $item['cmd1']['code'], $item['cmd2']['code'], $item['tvshow_id']);

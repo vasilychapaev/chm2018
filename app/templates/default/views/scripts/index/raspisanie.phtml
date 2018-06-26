@@ -10,87 +10,36 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Группа</th>
-                        <th>Тур</th>
-                        <th>Дата,время</th>
+<!--                        <th>Группа</th>-->
+<!--                        <th>Тур</th>-->
+                        <th>Дата и время</th>
                         <th>Команды</th>
-                        <th>Счет</th>
+<!--                        <th>Счет</th>-->
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
+
+                    <?php foreach ($this->items as $item):
+                        if (!$item['is_match']) continue;
+//                        echo '<pre>';print_r($item);echo '</pre>';
+                        ?>
                     <tr>
-                        <td>Группа А</td>
-                        <td>1</td>
-                        <td>14.06.2018, 18:00</td>
-                        <td>Россия - Саудовская Аравия</td>
-                        <td>-:-</td>
-                        <td><a href="#" class="btn btn-sm btn-primary">Смотреть</a></td>
+<!--                        <td>Группа А</td>-->
+<!--                        <td>1</td>-->
+                        <td><?php echo $item['datetime_ru']?></td>
+                        <td><img src="<?php echo $item['cmd1']['img']?>" alt="" style="width:16px;height:16px"> <?php echo $item['cmd12']?> <img src="<?php echo $item['cmd2']['img']?>" alt="" style="width:16px;height:16px"></td>
+<!--                        <td>-:-</td>-->
+                        <td>
+                            <?php if ($item['is_archive'] AND $item['is_archive_old']): ?>записи нет<?php endif ?>
+                            <?php if ($item['is_archive'] AND !$item['is_archive_old']): ?><a href="<?php echo $item['url']?>" class="btn btn-sm btn-primary">Смотреть из архива</a><?php endif ?>
+                            <?php if ($item['is_now']): ?><a href="<?php echo $item['url']?>" class="btn btn-sm btn-danger">Смотреть прямую трансляцию</a><?php endif ?>
+                            <?php if ($item['is_future']): ?>ждите...<?php endif ?>
+
+                            </a></td>
                     </tr>
-                    <tr>
-                        <td>Группа А</td>
-                        <td>1</td>
-                        <td>14.06.2018, 18:00</td>
-                        <td>Россия - Саудовская Аравия</td>
-                        <td>-:-</td>
-                        <td><a href="#" class="btn btn-sm btn-primary">Смотреть</a></td>
-                    </tr>
-                    <tr>
-                        <td>Группа А</td>
-                        <td>1</td>
-                        <td>15.06.2018, 18:00</td>
-                        <td>Египет - Уругвай</td>
-                        <td>-:-</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Группа А</td>
-                        <td>1</td>
-                        <td>15.06.2018, 18:00</td>
-                        <td>Египет - Уругвай</td>
-                        <td>-:-</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Группа А</td>
-                        <td>1</td>
-                        <td>15.06.2018, 18:00</td>
-                        <td>Египет - Уругвай</td>
-                        <td>-:-</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Группа А</td>
-                        <td>1</td>
-                        <td>15.06.2018, 18:00</td>
-                        <td>Египет - Уругвай</td>
-                        <td>-:-</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Группа А</td>
-                        <td>1</td>
-                        <td>15.06.2018, 18:00</td>
-                        <td>Египет - Уругвай</td>
-                        <td>-:-</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Группа А</td>
-                        <td>1</td>
-                        <td>15.06.2018, 18:00</td>
-                        <td>Египет - Уругвай</td>
-                        <td>-:-</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Группа А</td>
-                        <td>1</td>
-                        <td>15.06.2018, 18:00</td>
-                        <td>Египет - Уругвай</td>
-                        <td>-:-</td>
-                        <td></td>
-                    </tr>
+                    <?php endforeach ?>
+
                     </tbody>
 
                 </table>
