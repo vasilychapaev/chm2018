@@ -30,7 +30,8 @@ class Lms_Controller_Index extends Zend_Controller_Action
     {
         $this->view->title = "Будущие матчи Чемпионата мира по футболу 2018";
 
-        $items = Lms_Football::getTvshowsFuture();
+//        $items = Lms_Football::getTvshowsFuture();
+        $items = Lms_Football::getTvshowsTpl([]);
         $this->view->items = $items;
     }
 
@@ -120,6 +121,10 @@ class Lms_Controller_Index extends Zend_Controller_Action
     public function raspisanieAction()
     {
         $this->view->title = "Расписание матчей Чемпионата мира по футболу 2018";
+
+        $items = Lms_Football::getTvshowsAll();
+//        echo '<pre>';print_r($items);
+        $this->view->items = $items;
     }
 
 
@@ -239,6 +244,16 @@ class Lms_Controller_Index extends Zend_Controller_Action
 //      // $res = $db->query("update users set source_host = ? where user_id = ?d", $source_host, $user->getId());
 //      var_dump($res);exit;
 
+        $db = Lms_Db::get('main');
+
+        $dt = new DateTime();
+        $internalChannelId = 10300;
+
+//        $dbTvshows = $db->selectCol('SELECT tvshow_id AS ARRAY_KEY, 1 FROM tvshows WHERE `date`>=? AND channel_id=?d', $dt->format('Y-m-d'), $internalChannelId);
+//        echo '<pre>';print_r($dbTvshows);
+        $map = $db->select('SELECT channel_id AS ARRAY_KEY, epg_source AS `url`, epg_id AS `channel_id` FROM channels WHERE `active`=1 AND LENGTH(epg_source)>0 { AND channel_id=?d} ORDER BY RAND()', $channelId?: DBSIMPLE_SKIP);
+        echo '<pre>';print_r($map);
+        exit;
 
         $res = require_once $_SERVER['DOCUMENT_ROOT'].'/vendor/autoload.php';
         $url = 'https://www.kommersant.ru/doc/3468629';
