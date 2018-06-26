@@ -57,7 +57,7 @@ class Lms_Football
                     WHERE
                     t2.channel_id IN (10298, 10300)
                     AND NOW() < t2.start 
-                    AND (t1.name LIKE '%Футбол. Чемпионат мира-2018%' OR t1.name = 'Футбол. Дневник чемпионата мира')
+                    AND (t1.name LIKE '%Футбол. Чемпионат мира-2018%' or t1.name LIKE '%Футбол. Чемпионат мира%' OR t1.name = 'Футбол. Дневник чемпионата мира')
                     ORDER BY t2.start"
         );
 
@@ -80,7 +80,7 @@ class Lms_Football
                     t2.channel_id IN (10298, 10300)
                     AND NOW() > t2.start
                     AND t2.start > DATE_SUB(NOW(), INTERVAL 5 day)
-                    AND (t1.name LIKE '%Футбол. Чемпионат мира-2018%' OR t1.name = 'Футбол. Дневник чемпионата мира')
+                    AND (t1.name LIKE '%Футбол. Чемпионат мира-2018%' or t1.name LIKE '%Футбол. Чемпионат мира%' OR t1.name = 'Футбол. Дневник чемпионата мира')
                     ORDER BY t2.date desc"
         );
 
@@ -104,8 +104,8 @@ class Lms_Football
                     t2.channel_id IN (10298, 10300)
                     AND NOW() > t2.start
                     AND NOW() < t2.stop
-                    AND (t1.name LIKE '%Футбол. Чемпионат мира-2018%' OR t1.name = 'Футбол. Дневник чемпионата мира')
-                     ORDER BY t2.date"
+                    AND (t1.name LIKE '%Футбол. Чемпионат мира-2018%' or t1.name LIKE '%Футбол. Чемпионат мира%' OR t1.name = 'Футбол. Дневник чемпионата мира')
+                    ORDER BY t2.date"
         );
 
         foreach ($items as $k => $item)
@@ -211,6 +211,9 @@ class Lms_Football
 
         // ищу 2 названия стран через тире - заполню инфу о командах
         preg_match('/.+2018\. ([\w\s]+-[\w\s\-]+)($|\..*?)/iuU', $item['name'], $m);
+        if (!$m[1]) {
+            preg_match('/.+мира\. ([\w\s]+-[\w\s\-]+)($|\..*?)/iuU', $item['name'], $m);
+        }
         if ($m[1]) {
 
             $item['cmd12'] = $m[1];
