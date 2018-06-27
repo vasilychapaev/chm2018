@@ -30,8 +30,8 @@ class Lms_Controller_Index extends Zend_Controller_Action
     {
         $this->view->title = "Будущие матчи Чемпионата мира по футболу 2018";
 
-//        $items = Lms_Football::getTvshowsFuture();
-        $items = Lms_Football::getTvshowsTpl([]);
+        $items = Lms_Football::getTvshowsFuture();
+//        $items = Lms_Football::getTvshowsTpl([]);
         $this->view->items = $items;
     }
 
