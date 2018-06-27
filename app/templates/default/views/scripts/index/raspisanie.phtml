@@ -38,10 +38,10 @@
                         </td>
 <!--                        <td>-:-</td>-->
                         <td>
-                            <?php if ($item['is_archive'] AND $item['is_archive_old']): ?>записи нет<?php endif ?>
+                            <?php if ($item['is_archive'] AND $item['is_archive_old']): ?><?php endif ?>
                             <?php if ($item['is_archive'] AND !$item['is_archive_old']): ?><a href="<?php echo $item['url']?>" class="btn btn-sm btn-primary">Смотреть из архива</a><?php endif ?>
                             <?php if ($item['is_now']): ?><a href="<?php echo $item['url']?>" class="btn btn-sm btn-danger">Смотреть прямую трансляцию</a><?php endif ?>
-                            <?php if ($item['is_future']): ?>ждите...<?php endif ?>
+                            <?php if ($item['is_future']): ?><?php endif ?>
 
                             </a></td>
                     </tr>
