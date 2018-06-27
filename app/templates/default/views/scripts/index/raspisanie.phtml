@@ -20,15 +20,22 @@
                     </thead>
                     <tbody>
 
-                    <?php foreach ($this->items as $item):
+                    <?php
+                        $dubli = [];
+                        foreach ($this->items as $item):
                         if (!$item['is_match']) continue;
-//                        echo '<pre>';print_r($item);echo '</pre>';
+                        if (in_array($item['cmd12'], $dubli)) continue;
+                        $dubli[] = $item['cmd12'];
                         ?>
                     <tr>
 <!--                        <td>Группа А</td>-->
 <!--                        <td>1</td>-->
                         <td><?php echo $item['datetime_ru']?></td>
-                        <td class="cmd_flags"><img src="<?php echo $item['cmd1']['img']?>" alt=""> <?php echo $item['cmd12']?> <img src="<?php echo $item['cmd2']['img']?>" alt=""></td>
+                        <td class="cmd_flags">
+                            <img src="<?php echo $item['cmd1']['img']?>" alt="">
+                            <?php echo $item['cmd12']?>
+                            <img src="<?php echo $item['cmd2']['img']?>" alt="">
+                        </td>
 <!--                        <td>-:-</td>-->
                         <td>
                             <?php if ($item['is_archive'] AND $item['is_archive_old']): ?>записи нет<?php endif ?>
