@@ -151,7 +151,7 @@ class Lms_Football
                     WHERE
                     t2.channel_id IN (10298, 10300)
                     AND (t1.name LIKE '%Футбол. Чемпионат мира-2018%' or t1.name LIKE '%Футбол. Чемпионат мира%')
-                    ORDER BY t2.date"
+                    ORDER BY t2.start"
         );
 
         foreach ($items as $k => $item)

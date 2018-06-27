@@ -169,7 +169,15 @@ h2 {
   margin-bottom: 50px; }
 
 .section-setka img {
-  width: 32px; }
+  width: 16px; }
+.section-setka .group-row a, .section-setka .group-row a:hover, .section-setka .group-row a:focus {
+  text-decoration: none; }
+.section-setka hr {
+  margin: 20px 0; }
+
+.section-raspisanie .cmd_flags img {
+  width: 16px;
+  height: 16px; }
 
 .section-match .gazon {
   background: url(/images/grass-big-bg_low.jpg) repeat-x bottom left;
