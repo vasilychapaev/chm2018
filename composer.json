@@ -1,0 +1,5 @@
+{
+    "require": {
+        "wittiws/phpquery": "^0.9.6"
+    }
+}

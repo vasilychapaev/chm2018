@@ -1,4 +1,4 @@
-<div class="section section-thumbs">
+<div class="section section-raspisanie">
     <div class="container">
         <div class="row">
             <h1>Расписание матчей</h1>
@@ -28,7 +28,7 @@
 <!--                        <td>Группа А</td>-->
 <!--                        <td>1</td>-->
                         <td><?php echo $item['datetime_ru']?></td>
-                        <td><img src="<?php echo $item['cmd1']['img']?>" alt="" style="width:16px;height:16px"> <?php echo $item['cmd12']?> <img src="<?php echo $item['cmd2']['img']?>" alt="" style="width:16px;height:16px"></td>
+                        <td class="cmd_flags"><img src="<?php echo $item['cmd1']['img']?>" alt=""> <?php echo $item['cmd12']?> <img src="<?php echo $item['cmd2']['img']?>" alt=""></td>
 <!--                        <td>-:-</td>-->
                         <td>
                             <?php if ($item['is_archive'] AND $item['is_archive_old']): ?>записи нет<?php endif ?>

@@ -116,6 +116,59 @@ class Lms_Controller_Index extends Zend_Controller_Action
     {
         $this->view->title = "Турниная сетка Чемпионата мира по футболу 2018";
 
+        // todo cache
+        require_once $_SERVER['DOCUMENT_ROOT'].'/vendor/autoload.php';
+        $url = 'http://terrikon.com/worldcup-2018';
+        $html = file_get_contents($url);
+        $document = phpQuery::newDocumentHTML($html);
+
+
+        $groups = [];
+
+        $cnt = 0;
+        $headers = $document->find('.maincol h2');
+        foreach ($headers as $el)
+        {
+            $pq = pq($el);
+            $pq->find('a')->remove();
+            $h2 = trim($pq->text());
+            $h2 = str_replace('ЧМ 2018. ', '', $h2);
+            if ($h2) {
+                $groups[$cnt]['h2'] = $h2;
+                $cnt++;
+            }
+        }
+
+        $cnt = 0;
+        $tables = $document->find('.team-info table.grouptable');
+        foreach ($tables as $el)
+        {
+            $pq = pq($el);
+            $pq->addClass('table table-striped table-bordered');
+            $pq->find('a')->attr('href', '#');
+            $pq->find('tr th:first-child')->remove();
+            $pq->find('tr th:nth-child(7)')->remove();
+            $pq->find('tr th:nth-child(7)')->remove();
+            $pq->find('tr td:first-child')->remove();
+            $pq->find('tr td:nth-child(7)')->remove();
+            $pq->find('tr td:nth-child(7)')->remove();
+            $groups[$cnt]['grouptable'] = $pq->htmlOuter();
+            $cnt++;
+        }
+
+        $cnt = 0;
+        $results = $document->find('.team-info table.gameresult');
+        foreach ($results as $el)
+        {
+            $pq = pq($el);
+            $pq->addClass('table table-striped table-bordered');
+            $pq->find('a')->attr('href', '#');
+            $groups[$cnt]['resulttable'] = $pq->htmlOuter();
+            $cnt++;
+        }
+
+        $this->view->items = $groups;
+
     }
 
     public function raspisanieAction()
@@ -123,7 +176,6 @@ class Lms_Controller_Index extends Zend_Controller_Action
         $this->view->title = "Расписание матчей Чемпионата мира по футболу 2018";
 
         $items = Lms_Football::getTvshowsAll();
-//        echo '<pre>';print_r($items);
         $this->view->items = $items;
     }
 
@@ -232,49 +284,65 @@ class Lms_Controller_Index extends Zend_Controller_Action
 
     public function devAction()
     {
-//      $user = Lms_User::getUser();
-//      // echo $user->getSourceHost();
-//      echo $user->getEmail();
-//      // exit;
-//      $source_host = $user->getSourceHost();
-//      $source_host.= ($source_host?',':'') . 'russia2018';
-//      echo $source_host;//exit;
-//      $res = $user->setSourceHost($source_host)->save();
-//      // $db = Lms_Db::get('main');
-//      // $res = $db->query("update users set source_host = ? where user_id = ?d", $source_host, $user->getId());
-//      var_dump($res);exit;
+        echo '<pre>';
 
-        $db = Lms_Db::get('main');
+        require_once $_SERVER['DOCUMENT_ROOT'].'/vendor/autoload.php';
 
-        $dt = new DateTime();
-        $internalChannelId = 10300;
-
-//        $dbTvshows = $db->selectCol('SELECT tvshow_id AS ARRAY_KEY, 1 FROM tvshows WHERE `date`>=? AND channel_id=?d', $dt->format('Y-m-d'), $internalChannelId);
-//        echo '<pre>';print_r($dbTvshows);
-        $map = $db->select('SELECT channel_id AS ARRAY_KEY, epg_source AS `url`, epg_id AS `channel_id` FROM channels WHERE `active`=1 AND LENGTH(epg_source)>0 { AND channel_id=?d} ORDER BY RAND()', $channelId?: DBSIMPLE_SKIP);
-        echo '<pre>';print_r($map);
-        exit;
-
-        $res = require_once $_SERVER['DOCUMENT_ROOT'].'/vendor/autoload.php';
-        $url = 'https://www.kommersant.ru/doc/3468629';
-
-//        $ql = QueryList::get($url);
-//
-//        $data = $ql->rules([
-//            'title' => array('h2', 'text'),
-//            'txt'   => array('.tabloid__details', 'text')
-//        ])->query()->getData();
-//
-//
-//        echo '<pre>';print_r($data->all());
-
+        $url = 'http://terrikon.com/worldcup-2018';
         $html = file_get_contents($url);
-        $dom = pQuery::parseStr($html);
 
-        $dom->query('h2');
+        $saw = new nokogiri($html);
+//        var_dump(
+//            $saw->get('.maincol h2:first-child')
+//            $saw->get('.maincol h2:first-child')->toText()
+//            $saw->get('.maincol h2:first-child')->toTextArray()
+//            $saw->get('.maincol h2:first-child')->toXml()
+//        );
 
+//        foreach ( $saw->get('.maincol h2')->toArray() as $h2)
+//            print_r($h2['#text']);
+//        foreach ( $saw->get('.maincol h2 a') as $h2) // плейофф
+//            print_r($h2['#text'][0]);
 
+//        foreach ( $saw->get('table.grouptable')-> as $tbl)
+//            print_r($tbl);
 
+        $groups = [];
+
+        $document = phpQuery::newDocumentHTML($html);
+
+        $cnt = 0;
+        $headers = $document->find('.maincol h2');
+        foreach ($headers as $el)
+        {
+            $pq = pq($el);
+            $pq->find('a')->remove();
+            $h2 = trim($pq->text());
+            if ($h2) {
+                $groups[$cnt]['h2'] = $h2;
+                $cnt++;
+            }
+        }
+
+        $cnt = 0;
+        $tables = $document->find('.team-info table.grouptable');
+        foreach ($tables as $el)
+        {
+            $groups[$cnt]['grouptable'] = pq($el)->htmlOuter();
+            $cnt++;
+        }
+
+        $cnt = 0;
+        $results = $document->find('.team-info table.gameresult');
+        foreach ($results as $el)
+        {
+            $groups[$cnt]['resulttable'] = pq($el)->htmlOuter();
+            $cnt++;
+        }
+
+        print_r($groups);
+
+        echo '</pre>';
     }
 
 

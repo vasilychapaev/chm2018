@@ -62,8 +62,29 @@
   }
 }
 
-.section-setka img {
-  width: 32px
+.section-setka {
+
+  img {
+    width: 16px
+  }
+
+  .group-row {
+    //margin-bottom: 50px;
+
+    a, a:hover, a:focus {
+      text-decoration: none;
+    }
+  }
+
+  hr {margin: 20px 0}
+
+}
+
+
+.section-raspisanie {
+
+  .cmd_flags img {width:16px;height:16px}
+
 }
 
 
