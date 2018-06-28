@@ -138,7 +138,38 @@ class Lms_Controller_Index extends Zend_Controller_Action
 
 
         $groups = [];
+        $final = [];
 
+
+        // плей-офф
+        $cnt = 0;
+        $headers = $document->find('.maincol h2 a');
+        foreach ($headers as $el)
+        {
+            $pq = pq($el);
+            $h2 = trim($pq->text());
+            $h2 = str_replace('ЧМ 2018. ', '', $h2);
+            if ($h2) {
+                $final[$cnt]['h2'] = $h2;
+                $cnt++;
+            }
+        }
+
+        $cnt = 0;
+        $results = $document->find('.groups-info table.gameresult');
+        foreach ($results as $el)
+        {
+            $pq = pq($el);
+            $pq->addClass('table table-striped table-bordered');
+            $pq->find('a')->attr('href', '#');
+            $final[$cnt]['resulttable'] = $pq->htmlOuter();
+            $cnt++;
+        }
+
+
+
+
+        // групповой этап
         $cnt = 0;
         $headers = $document->find('.maincol h2');
         foreach ($headers as $el)
@@ -181,7 +212,9 @@ class Lms_Controller_Index extends Zend_Controller_Action
             $cnt++;
         }
 
-        $this->view->items = $groups;
+
+        $this->view->final = $final;
+        $this->view->groups = $groups;
 
     }
 
