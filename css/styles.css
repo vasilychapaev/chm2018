@@ -60,7 +60,8 @@ h2 {
   .navbar-form .wrapper div {
     display: inline-block;
     margin-top: 10px;
-    background: url(/images/search-bg.png) no-repeat top center;
+    padding-top: 5px;
+    background: url(/images/search-bg.png) no-repeat top left;
     background-size: 250px;
     width: 250px;
     height: 40px; }
@@ -69,14 +70,18 @@ h2 {
       border: 0; }
       .navbar-form .wrapper div button img {
         width: 26px;
-        margin-top: 5px;
         margin-left: -2px; }
     .navbar-form .wrapper div input {
       display: inline-block;
       border: 0;
       width: 196px;
+      height: 30px; }
+    .navbar-form .wrapper div #search-select {
+      width: 196px;
       height: 30px;
-      margin-top: 5px; }
+      border: 0; }
+    .navbar-form .wrapper div .select2-container .select2-selection--single {
+      height: 30px; }
 
 .navbar-inverse .navbar-nav ul {
   margin-right: 100px; }

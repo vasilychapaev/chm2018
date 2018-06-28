@@ -20,7 +20,10 @@
 
     <script src="/js/jquery.js"></script>
     <script charset="UTF-8" src="//cdn.sendpulse.com/9dae6d62c816560a842268bde2cd317d/js/push/7d8e4b4734862d692c51d9bd46cd7225_1.js" async></script>
-    
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
 </head>
 
 <body>
@@ -49,7 +52,18 @@
                 <div class="wrapper">
                     <div>
                         <button><img src="/images/search-icon.png" alt=""></button>
-                        <input type="text" class="form-control" placeholder="Поиск">
+<!--                        <input type="text" class="form-control" placeholder="Поиск">-->
+                        <select name="" id="search-select" <!--multiple="multiple"-->>
+                            <option value="">111</option>
+                            <option value="">222</option>
+                        </select>
+                        <script>
+                            $(document).ready(function () {
+                                $('#search-select').select2({
+                                    placeholder: 'test'
+                                });
+                            })
+                        </script>
                     </div>
                 </div>
             </form>

@@ -22,7 +22,8 @@
   .wrapper div {
     display: inline-block;
     margin-top: 10px;
-    background: url(/images/search-bg.png) no-repeat top center;
+    padding-top: 5px;
+    background: url(/images/search-bg.png) no-repeat top left;
     background-size: 250px;
     width: 250px;
     height: 40px;
@@ -33,7 +34,6 @@
 
       img {
         width: 26px;
-        margin-top: 5px;
         margin-left: -2px;
       }
     }
@@ -43,8 +43,15 @@
       border: 0;
       width: 196px;
       height: 30px;
-      margin-top: 5px;
     }
+
+    #search-select {
+      width: 196px;
+      height: 30px;
+      border: 0;
+    }
+
+    .select2-container .select2-selection--single {height: 30px}
 
   }
 }
