@@ -619,6 +619,17 @@ class Lms_Application
         );
 
 
+        $router->addRoute(
+            'search',
+            new Zend_Controller_Router_Route('search/*',
+                array(
+                    'controller' => 'index',
+                    'action'     => 'search'
+                )
+            )
+        );
+
+
 
         $router->addRoute(
             'mailer',

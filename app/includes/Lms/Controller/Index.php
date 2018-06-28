@@ -46,6 +46,19 @@ class Lms_Controller_Index extends Zend_Controller_Action
     }
 
 
+
+    public function searchAction()
+    {
+        $this->view->title = "Поиск по Чемпионату мира по футболу 2018";
+        $this->view->q = $q = $this->_getParam('q');
+        if ($q)
+        {
+            $items = Lms_Football::getTvshowSearch($q);
+            $this->view->items = $items;
+        }
+    }
+
+
     public function matchAction()
     {
         $cmd1 = $this->_getParam('cmd1');

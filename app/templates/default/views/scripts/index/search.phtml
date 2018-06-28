@@ -1,0 +1,25 @@
+<div class="section section-thumbs">
+    <div class="container">
+        <div class="row">
+
+            <h1>Результаты поиска</h1>
+
+            <?php if ($this->q and $this->items): ?>
+                <?php foreach ($this->items as $item): ?>
+                    <div class="col-sm-4">
+                        <a href="<?php echo $item['url']?>"><img src="<?php echo $item['thumb']?>" alt=""></a>
+                        <span><a href="<?php echo $item['url']?>"><?=$item['title']?> <?//=$item['channel_id']?></a></span>
+                    </div>
+                <?php endforeach ?>
+            <?php else:?>
+                <div>
+                    <b><?php echo $this->q ?></b>: результатов не найдено
+                </div>
+            <?php endif ?>
+
+
+        </div>
+
+
+    </div>
+</div>

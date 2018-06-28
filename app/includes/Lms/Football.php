@@ -115,6 +115,30 @@ class Lms_Football
         return $items;
     }
 
+    static public function getTvshowSearch($q)
+    {
+        $db = Lms_Db::get('main');
+
+        $q = '%'.$q.'%';
+        $items = $db->select(
+            "SELECT
+                    t1.name, t1.movie_id, t1.covers, t2.tvshow_id, t2.channel_id, t2.date, t2.start, t2.stop
+                    FROM movies t1
+                    JOIN tvshows t2 USING (movie_id)
+                    WHERE
+                    t2.channel_id IN (10298, 10300)
+                    AND t2.start > DATE_SUB(NOW(), INTERVAL 5 day)
+                    AND (t1.name LIKE '%Футбол. Чемпионат мира-2018%' or t1.name LIKE '%Футбол. Чемпионат мира%' OR t1.name = 'Футбол. Дневник чемпионата мира')
+                    AND (t1.name LIKE ?)
+                    ORDER BY t2.start ", $q
+        );
+
+        foreach ($items as $k => $item)
+            $items[$k] = self::titleParse($item);
+
+        return $items;
+    }
+
 
     static public function getTvshowsNow()
     {

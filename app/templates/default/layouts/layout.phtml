@@ -8,7 +8,7 @@
     <title><?php echo $this->title; ?></title>
 
     <link href="/css/bootstrap.css" rel="stylesheet">
-    <link href="/css/styles.css?20180627" rel="stylesheet">
+    <link href="/css/styles.css?20180628" rel="stylesheet">
 
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
@@ -19,10 +19,12 @@
     <meta name="theme-color" content="#ffffff">
 
     <script src="/js/jquery.js"></script>
+
+    <script src="/js/jquery.auto-complete/jquery.auto-complete.js"></script>
+    <link rel="stylesheet" href="/js/jquery.auto-complete/jquery.auto-complete.css">
+
     <script charset="UTF-8" src="//cdn.sendpulse.com/9dae6d62c816560a842268bde2cd317d/js/push/7d8e4b4734862d692c51d9bd46cd7225_1.js" async></script>
 
-    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
 </head>
 
@@ -48,19 +50,32 @@
                 <li><a href="/raspisanie/">Расписание матчей</a></li>
             </ul>
 
-            <form class="navbar-form" role="search">
+            <form class="navbar-form" role="search" action="/search/">
                 <div class="wrapper">
                     <div>
                         <button><img src="/images/search-icon.png" alt=""></button>
-<!--                        <input type="text" class="form-control" placeholder="Поиск">-->
-                        <select name="" id="search-select" <!--multiple="multiple"-->>
-                            <option value="">111</option>
-                            <option value="">222</option>
-                        </select>
+                        <input name="q" type="text" class="form-control" placeholder="Найти команду" id="search-input">
                         <script>
                             $(document).ready(function () {
-                                $('#search-select').select2({
-                                    placeholder: 'test'
+                                $('#search-input').autoComplete({
+                                    minChars: 0,
+                                    source: function(term, suggest){
+                                        term = term.toLowerCase();
+                                        var choices = [["Австралия","/images/flags/australia.svg"],["Англия","/images/flags/united-kingdom.svg"],["Аргентина","/images/flags/argentina.svg"],["Бельгия","/images/flags/belgium.svg"],["Бразилия","/images/flags/brazil.svg"],["Германия","/images/flags/germany.svg"],["Дания","/images/flags/denmark.svg"],["Египет","/images/flags/egypt.svg"],["Иран","/images/flags/iran.svg"],["Исландия","/images/flags/iceland.svg"],["Испания","/images/flags/spain.svg"],["Колумбия","/images/flags/colombia.svg"],["Коста-Рика","/images/flags/costa-rica.svg"],["Марокко","/images/flags/morocco.svg"],["Мексика","/images/flags/mexico.svg"],["Нигерия","/images/flags/nigeria.svg"],["Панама","/images/flags/panama.svg"],["Перу","/images/flags/peru.svg"],["Польша","/images/flags/poland.svg"],["Португалия","/images/flags/portugal.svg"],["Россия","/images/flags/russia.svg"],["Саудовская Аравия","/images/flags/saudi-arabia.svg"],["Сенегал","/images/flags/senegal.svg"],["Сербия","/images/flags/serbia.svg"],["Тунис","/images/flags/tunisia.svg"],["Уругвай","/images/flags/uruguay.svg"],["Франция","/images/flags/france.svg"],["Хорватия","/images/flags/croatia.svg"],["Швейцария","/images/flags/switzerland.svg"],["Швеция","/images/flags/sweden.svg"],["Южная Корея","/images/flags/south-korea.svg"],["Япония","/images/flags/japan.svg"]];
+                                        var suggestions = [];
+                                        for (i=0;i<choices.length;i++)
+                                            if (~(choices[i][0]+' '+choices[i][1]).toLowerCase().indexOf(term))
+                                                suggestions.push(choices[i]);
+                                        suggest(suggestions);
+                                    },
+                                    renderItem: function (item, search){
+                                        search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+                                        var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
+                                        return '<div class="autocomplete-suggestion" data-country="'+item[0]+'" data-val="'+search+'"><img src="'+item[1]+'"> '+item[0].replace(re, "<b>$1</b>")+'</div>';
+                                    },
+                                    onSelect: function(e, term, item){
+                                        $('#search-input').val(item.data('country'));
+                                    }
                                 });
                             })
                         </script>
