@@ -1,12 +1,33 @@
 
 <div class="section section-setka">
     <div class="container">
-        <div class="row">
-            <h1>Турнирная сетка</h1>
+
+        <h1>Турнирная сетка</h1>
+
+
+
+        <h3>Плей-офф</h3>
+
+        <?php foreach ($this->final as $group): ?>
+        <div class="row group-row">
+
+            <div class="col-md-6 col-md-offset-3">
+                <h2><?php echo $group['h2']?></h2>
+                <?php echo $group['resulttable'] ?>
+            </div>
         </div>
 
-        <?php foreach ($this->items as $group): ?>
-        <div class="row group-row">
+        <hr>
+        <?php endforeach ?>
+
+
+
+
+        <h3>Групповой этап</h3>
+
+        <?php foreach ($this->groups as $group): ?>
+            <div class="row group-row">
+
 
             <div class="col-sm-6">
                 <h2><?php echo $group['h2']?></h2>
