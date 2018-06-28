@@ -1,8 +1,10 @@
 <div class="section section-thumbs">
     <div class="container">
-        <div class="row">
 
-            <h1>Результаты поиска</h1>
+        <h1>Результаты поиска: <?php echo $this->q ?></h1>
+        <br>
+
+        <div class="row">
 
             <?php if ($this->q and $this->items): ?>
                 <?php foreach ($this->items as $item): ?>
@@ -12,8 +14,8 @@
                     </div>
                 <?php endforeach ?>
             <?php else:?>
-                <div>
-                    <b><?php echo $this->q ?></b>: результатов не найдено
+                <div class="col-xs-12">
+                    результатов не найдено
                 </div>
             <?php endif ?>
 
