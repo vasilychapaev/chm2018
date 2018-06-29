@@ -282,17 +282,19 @@ class Lms_Football
 
 
         // ищу 2 названия стран через тире - заполню инфу о командах
-        preg_match('/.+2018\. ([\w\s]+-[\w\s\-]+)($|\..*?)/iuU', $item['name'], $m);
-        if (!$m[1]) {
-            preg_match('/.+мира\. ([\w\s]+-[\w\s\-]+)($|\..*?)/iuU', $item['name'], $m);
-        }
+        preg_match('/.+2018\. ([\w\s]+-[\w\s\-]+)($|\..*?)/iuU', $item['name'], $m); // БТ5 - предварительные
+        if (!$m[1])
+            preg_match('/.+мира\. ([\w\s]+-[\w\s\-]+)($|\..*?)/iuU', $item['name'], $m); // БТ2 - предварительные
+        if (!$m[1])
+            preg_match('/.+2018\..* ([\w\s]+-[\w\s\-]+)($|\..*?|,.*)/iuU', $item['name'], $m); // БТ5 - плейофф
+
         if ($m[1]) {
 
             $item['cmd12'] = $m[1];
-            list($cmd1, $cmd2) = explode('-', $m['1']);
-            if ($country = self::countryGet($cmd1))
+            list($cmd1, $cmd2) = explode('-', $m[1]);
+            if ($country = self::countryGet(trim($cmd1)))
                 $item['cmd1'] = $country;
-            if ($country = self::countryGet($cmd2))
+            if ($country = self::countryGet(trim($cmd2)))
                 $item['cmd2'] = $country;
 
             if (isset($item['cmd1']) and isset($item['cmd2'])) { // 1й тип трансляции - есть 2 команды = матч
