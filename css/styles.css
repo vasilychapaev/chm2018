@@ -157,7 +157,8 @@ h2 {
   display: block;
   margin-top: 10px;
   margin-bottom: 20px;
-  text-align: center; }
+  text-align: center;
+  height: 50px; }
 .section-thumbs .button-more {
   text-align: center; }
   .section-thumbs .button-more a {
