@@ -50,6 +50,9 @@
     $(document).ready(function () {
         $('.group-row a').on('click', function(e){
             e.preventDefault();
+            var country = $(this).html().trim();
+            if (country)
+                window.location.href = '/search/?q=' + country;
         })
     })
 </script>
