@@ -53,7 +53,7 @@
             <form class="navbar-form" role="search" action="/search/">
                 <div class="wrapper">
                     <div>
-                        <button><img src="/images/search-icon.png" alt=""></button>
+                        <button id="search-button"><img src="/images/search-icon.png" alt=""></button>
                         <input name="q" type="text" class="form-control" placeholder="Найти команду" id="search-input">
                         <script>
                             $(document).ready(function () {
@@ -75,6 +75,7 @@
                                     },
                                     onSelect: function(e, term, item){
                                         $('#search-input').val(item.data('country'));
+                                        $('#search-button').click();
                                     }
                                 });
                             })
